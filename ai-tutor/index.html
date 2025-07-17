@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop 3: AI Personal Tutor - ติวเตอร์ AI ส่วนตัว 24/7</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: linear-gradient(135deg, #45b7d1, #96ceb4);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #45b7d1;
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #45b7d1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .hero .description {
+            font-size: 1.1em;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .workshop-overview {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .stat-item i {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #45b7d1, #96ceb4);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .ai-platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .platform-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #45b7d1;
+            transition: all 0.3s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .platform-icon {
+            font-size: 3em;
+            color: #45b7d1;
+            margin-bottom: 15px;
+        }
+
+        .google-integration {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 2px solid #42a5f5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .google-integration h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prompt-examples {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .prompt-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #45b7d1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .prompt-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .prompt-label {
+            background: #45b7d1;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .conversation-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .conversation-example::before {
+            content: 'ตัวอย่างการสนทนา';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #4a5568;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .user-message {
+            background: #4299e1;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ai-message {
+            background: #48bb78;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hands-on-section {
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+        }
+
+        .learning-scenario {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4fd1c7;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .scenario-number {
+            background: #4fd1c7;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .step-list li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .step-list li:last-child {
+            border-bottom: none;
+        }
+
+        .step-list li::before {
+            content: "🤖";
+            position: absolute;
+            left: 0;
+            top: 10px;
+        }
+
+        .learning-style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .learning-style-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .learning-style-card:hover {
+            border-color: #45b7d1;
+            box-shadow: 0 5px 15px rgba(69, 183, 209, 0.2);
+        }
+
+        .style-icon {
+            font-size: 2.5em;
+            color: #45b7d1;
+            margin-bottom: 15px;
+        }
+
+        .progress-tracker {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #45b7d1;
+        }
+
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #45b7d1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .tip-box {
+            background: #ebf8ff;
+            border: 2px solid #63b3ed;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box strong {
+            color: #2b6cb0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #45b7d1, #96ceb4);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: #45b7d1;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #45b7d1;
+        }
+
+        .timeline-time {
+            background: #45b7d1;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .navigation-footer {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.prev {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, #45b7d1, #96ceb4);
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            background: rgba(45, 55, 72, 0.95);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .ai-platforms {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-user-graduate"></i> AI Personal Tutor
+            </div>
+            <div class="nav-links">
+                <a href="../super-search/">← Workshop ก่อนหน้า</a>
+                <a href="../">หน้าหลัก</a>
+                <a href="../smart-summary/">Workshop ต่อไป →</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1><i class="fas fa-user-graduate"></i> AI Personal Tutor</h1>
+            <p class="subtitle">ติวเตอร์ AI ส่วนตัว 24/7</p>
+            <p class="description">
+                สร้างติวเตอร์ AI ที่เข้าใจสไตล์การเรียนของคุณ 
+                และปรับวิธีสอนให้เหมาะกับคุณเฉพาะบุคคล
+            </p>
+        </div>
+
+        <div class="workshop-overview">
+            <h2 style="text-align: center; margin-bottom: 20px;">
+                <i class="fas fa-bullseye"></i> เป้าหมาย Workshop
+            </h2>
+            <div class="overview-stats">
+                <div class="stat-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>24/7 Support</h3>
+                    <p>ติวเตอร์ที่ตอบคำถาม<br><strong>ตลอดเวลา</strong></p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-user-check"></i>
+                    <h3>Personal Learning</h3>
+                    <p>ปรับให้เหมาะกับ<br><strong>สไตล์การเรียน</strong></p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Deep Understanding</h3>
+                    <p>เข้าใจลึก<br><strong>ไม่แค่จำ</strong></p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Progress Tracking</h3>
+                    <p>ติดตามความก้าวหน้า<br><strong>แบบเรียลไทม์</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Platforms & Google Integration -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-robot"></i> AI Platforms + Google Workspace</h2>
+                <p>รวมพลัง AI กับ Google Tools ที่ใช้อยู่แล้ว</p>
+            </div>
+            <div class="section-content">
+                <div class="ai-platforms">
+                    <div class="platform-card">
+                        <i class="fas fa-comments platform-icon"></i>
+                        <h3>ChatGPT + Google Classroom</h3>
+                        <p><strong>สำหรับ:</strong> วิเคราะห์งานที่ได้รับ วางแผนทำงาน</p>
+                        <p><strong>จุดเด่น:</strong> เชื่อมโยงกับ Google Workspace ได้ดี</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>วิเคราะห์ Assignment จาก Google Classroom</li>
+                                <li>สร้าง Timeline ทำงานใน Google Calendar</li>
+                                <li>เก็บ Progress ใน Google Sheets</li>
+                                <li>แชร์ผลงานผ่าน Google Drive</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="platform-card">
+                        <i class="fas fa-brain platform-icon"></i>
+                        <h3>Claude + Google Docs</h3>
+                        <p><strong>สำหรับ:</strong> เขียนรายงาน วิเคราะห์เอกสาร</p>
+                        <p><strong>จุดเด่น:</strong> อ่านไฟล์ยาวและวิเคราะห์ได้ดี</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>วิเคราะห์เอกสารจาก Google Drive</li>
+                                <li>ช่วยเขียนรายงานใน Google Docs</li>
+                                <li>ตรวจสอบ Grammar ในภาษาไทย/อังกฤษ</li>
+                                <li>สร้าง Presentation ใน Google Slides</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="platform-card">
+                        <i class="fas fa-search platform-icon"></i>
+                        <h3>Google Bard + Google Services</h3>
+                        <p><strong>สำหรับ:</strong> ค้นหาข้อมูล เชื่อมต่อ Google Services</p>
+                        <p><strong>จุดเด่น:</strong> ผสานรวมกับ Google ecosystem</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>ค้นหาข้อมูลจาก Google Search โดยตรง</li>
+                                <li>เข้าถึง Google Scholar และ Google Books</li>
+                                <li>ดู Google Maps และวิเคราะห์ข้อมูล</li>
+                                <li>ตรวจสอบ Gmail และจัดการตารางเวลา</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="platform-card">
+                        <i class="fas fa-cogs platform-icon"></i>
+                        <h3>Custom GPTs + Google Apps</h3>
+                        <p><strong>สำหรับ:</strong> สร้างติวเตอร์เฉพาะสาขาวิชา</p>
+                        <p><strong>จุดเด่น:</strong> ปรับแต่งตามความต้องการเฉพาะ</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>สร้างติวเตอร์คณิตศาสตร์ + Google Sheets</li>
+                                <li>ติวเตอร์ภาษาอังกฤษ + Google Translate</li>
+                                <li>ติวเตอร์วิทยาศาสตร์ + Google Earth</li>
+                                <li>ติวเตอร์ประวัติศาสตร์ + Google Arts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt Engineering สำหรับการเรียนรู้ -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-magic"></i> Prompt Engineering สำหรับการเรียนรู้</h2>
+                <p>เทคนิคการเขียนคำสั่งที่ทำให้ AI เป็นติวเตอร์ที่ดี</p>
+            </div>
+            <div class="section-content">
+                <div class="prompt-examples">
+                    <h3><i class="fas fa-lightbulb"></i> Template Prompts สำหรับการเรียนรู้</h3>
+                    
+                    <div class="prompt-card">
+                        <div class="prompt-label">สำหรับอธิบายแนวคิด</div>
+                        <strong>Template:</strong> "อธิบาย [หัวข้อ] ให้เข้าใจง่าย พร้อมยกตัวอย่าง 3 ตัวอย่าง แล้วสร้างแบบทดสอบ 5 ข้อ"
+                        <div class="conversation-example">
+                            <div class="user-message">👨‍🎓 อธิบาย photosynthesis ให้เข้าใจง่าย พร้อมยกตัวอย่าง 3 ตัวอย่าง แล้วสร้างแบบทดสอบ 5 ข้อ</div>
+                            <div class="ai-message">🤖 การสังเคราะห์แสง คือกระบวนการที่พืชใช้แสงแดด น้ำ และคาร์บอนไดออกไซด์ มาผลิตอาหาร...
+                            
+ตัวอย่าง:
+1. ใบไผ่ในสวน → ใช้แสงแดดทำอาหาร
+2. สาหร่ายในน้ำ → ปล่อยออกซิเจน
+3. ต้นข้าวในนา → เปลี่ยน CO2 เป็นน้ำตาล
+
+แบบทดสอบ:
+1. การสังเคราะห์แสงต้องการสิ่งใดบ้าง?...</div>
+                        </div>
+                    </div>
+
+                    <div class="prompt-card">
+                        <div class="prompt-label">สำหรับแก้โจทย์</div>
+                        <strong>Template:</strong> "ช่วยแก้โจทย์นี้ทีละขั้นตอน พร้อมอธิบายเหตุผลในแต่ละขั้น: [โจทย์]"
+                        <div class="conversation-example">
+                            <div class="user-message">👨‍🎓 ช่วยแก้โจทย์นี้ทีละขั้นตอน พร้อมอธิบายเหตุผลในแต่ละขั้น: แก้สมการ 2x + 5 = 13</div>
+                            <div class="ai-message">🤖 ขั้นตอนการแก้:
+
+ขั้นที่ 1: ย้าย 5 ไปอีกข้าง
+2x + 5 = 13
+2x = 13 - 5
+2x = 8
+
+ขั้นที่ 2: หาร 2 ทั้งสองข้าง
+x = 8 ÷ 2
+x = 4
+
+ตรวจสอบ: 2(4) + 5 = 8 + 5 = 13 ✓</div>
+                        </div>
+                    </div>
+
+                    <div class="prompt-card">
+                        <div class="prompt-label">สำหรับสรุปบทเรียน</div>
+                        <strong>Template:</strong> "สรุป [เนื้อหา] เป็นจุดสำคัญ 5 ข้อ แล้วสร้าง mind map และแฟลชการ์ด"
+                        <div class="conversation-example">
+                            <div class="user-message">👨‍🎓 สรุปเรื่องการปฏิวัติอุตสาหกรรม เป็นจุดสำคัญ 5 ข้อ แล้วสร้าง mind map และแฟลชการ์ด</div>
+                            <div class="ai-message">🤖 จุดสำคัญ 5 ข้อ:
+1. เริ่มที่อังกฤษ ศตวรรษที่ 18
+2. การประดิษฐ์จักรไอน้ำ
+3. การเปลี่ยนจากการเกษตรสู่อุตสาหกรรม
+4. การเกิดเมืองโรงงาน
+5. ผลกระทบต่อสังคมและสิ่งแวดล้อม
+
+Mind Map:
+การปฏิวัติอุตสาหกรรม
+├── สาเหตุ
+├── นวัตกรรม
+├── ผลกระทบ
+└── มรดก
+
+Flashcards:
+หน้า: การปฏิวัติอุตสาหกรรมเริ่มที่ไหน?
+หลัง: อังกฤษ ศตวรรษที่ 18...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- กิจกรรมปฏิบัติ -->
+        <div class="content-section hands-on-section">
+            <div class="section-header">
+                <h2><i class="fas fa-hands"></i> กิจกรรมปฏิบัติ: Personal Learning Journey</h2>
+                <p>สร้างติวเตอร์ AI ที่เข้าใจสไตล์การเรียนของคุณ</p>
+            </div>
+            <div class="section-content">
+                <div class="learning-scenario">
+                    <div class="scenario-number">1</div>
+                    <h3><i class="fas fa-user-check"></i> การวิเคราะห์สไตล์การเรียนรู้</h3>
+                    <p><strong>เป้าหมาย:</strong> ให้ AI เข้าใจว่าคุณเรียนรู้ได้ดีที่สุดแบบไหน</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> ทำแบบทดสอบสไตล์การเรียนรู้กับ AI</li>
+                        <li><strong>ขั้นที่ 2:</strong> บอก AI เกี่ยวกับประสบการณ์การเรียนที่ผ่านมา</li>
+                        <li><strong>ขั้นที่ 3:</strong> ให้ AI วิเคราะห์และสร้างโปรไฟล์การเรียนรู้</li>
+                        <li><strong>ขั้นที่ 4:</strong> ขอให้ AI แนะนำวิธีการเรียนที่เหมาะสม</li>
+                    </div>
+                    
+                    <div class="conversation-example">
+                        <div class="user-message">👨‍🎓 ช่วยวิเคราะห์สไตล์การเรียนรู้ของฉัน ฉันจำได้ดีเมื่อมีภาพประกอบ และชอบทำแบบฝึกหัดทันที</div>
+                        <div class="ai-message">🤖 จากข้อมูลที่บอกมา คุณน่าจะเป็นประเภท Visual + Kinesthetic Learner
+
+คุณเรียนรู้ได้ดีเมื่อ:
+- มีภาพ กราฟ ไดอะแกรม
+- ได้ลงมือปฏิบัติทันที
+- มีการเชื่อมโยงภาพกับแนวคิด
+
+ฉันจะสอนคุณโดย:
+- ใช้ภาพและตัวอย่างเยอะๆ
+- ให้แบบฝึกหัดหลังอธิบาย
+- สร้าง mind map ประกอบ</div>
+                    </div>
+                </div>
+
+                <div class="learning-scenario">
+                    <div class="scenario-number">2</div>
+                    <h3><i class="fas fa-calendar-alt"></i> การสร้างแผนการเรียนส่วนบุคคล</h3>
+                    <p><strong>เป้าหมาย:</strong> ให้ AI สร้างตารางเรียน + Google Calendar integration</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> บอก AI เกี่ยวกับวิชาที่เรียนและเป้าหมาย</li>
+                        <li><strong>ขั้นที่ 2:</strong> แชร์ Google Calendar เพื่อดูเวลาว่าง</li>
+                        <li><strong>ขั้นที่ 3:</strong> ให้ AI สร้างแผนการเรียนแบบ Spaced Repetition</li>
+                        <li><strong>ขั้นที่ 4:</strong> ใช้ Google Sheets ติดตามความก้าวหน้า</li>
+                    </div>
+                    
+                    <div class="google-integration">
+                        <h4><i class="fab fa-google"></i> Google Integration Workflow</h4>
+                        <div class="progress-tracker">
+                            <div class="progress-item">
+                                <div class="progress-circle">1</div>
+                                <div>
+                                    <strong>Google Calendar</strong><br>
+                                    ดูเวลาว่างและกำหนดเวลาเรียน
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-circle">2</div>
+                                <div>
+                                    <strong>Google Sheets</strong><br>
+                                    ติดตามความก้าวหน้าและคะแนน
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-circle">3</div>
+                                <div>
+                                    <strong>Google Drive</strong><br>
+                                    เก็บไฟล์เรียนและแบบฝึกหัด
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-circle">4</div>
+                                <div>
+                                    <strong>Google Classroom</strong><br>
+                                    ส่งงานและรับฟีดแบ็ค
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-scenario">
+                    <div class="scenario-number">3</div>
+                    <h3><i class="fas fa-graduation-cap"></i> การสร้างแบบทดสอบและการประเมิน</h3>
+                    <p><strong>เป้าหมาย:</strong> ให้ AI สร้างแบบทดสอบตามระดับความรู้</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> ขอให้ AI สร้างแบบทดสอบประเมินความรู้พื้นฐาน</li>
+                        <li><strong>ขั้นที่ 2:</strong> AI วิเคราะห์จุดอ่อนและสร้างแบบฝึกหัดเพิ่มเติม</li>
+                        <li><strong>ขั้นที่ 3:</strong> ใช้ Google Forms สร้างแบบทดสอบอัตโนมัติ</li>
+                        <li><strong>ขั้นที่ 4:</strong> AI ให้คำแนะนำการปรับปรุง</li>
+                    </div>
+                    
+                    <div class="conversation-example">
+                        <div class="user-message">👨‍🎓 สร้างแบบทดสอบเรื่อง photosynthesis ระดับกลาง 10 ข้อ พร้อมเฉลย</div>
+                        <div class="ai-message">🤖 แบบทดสอบ: การสังเคราะห์แสง (ระดับกลาง)
+
+1. การสังเคราะห์แสงเกิดขึ้นในส่วนใดของเซลล์?
+   a) ไมโตคอนเดรีย  b) คลอโรพลาสต์  c) นิวเคลียส  d) ไรโบโซม
+
+2. สมการของการสังเคราะห์แสงคือ?
+   a) 6CO2 + 6H2O + แสง → C6H12O6 + 6O2
+   b) C6H12O6 + 6O2 → 6CO2 + 6H2O + ATP
+   c) 2H2O → 2H2 + O2
+   d) CO2 + H2O → CH2O + O2
+
+เฉลย: 1-b, 2-a...
+
+จุดที่ควรศึกษาเพิ่มเติม:
+- โครงสร้างคลอโรพลาสต์
+- ปฏิกิริยาขึ้นอยู่กับแสงและไม่ขึ้นอยู่กับแสง</div>
+                    </div>
+                </div>
+
+                <div class="learning-scenario">
+                    <div class="scenario-number">4</div>
+                    <h3><i class="fas fa-comments"></i> การสนทนาเพื่อความเข้าใจลึก</h3>
+                    <p><strong>เป้าหมาย:</strong> ใช้ AI แบบ Socratic Method เพื่อเข้าใจลึก</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> ขอให้ AI ใช้วิธี Socratic Method</li>
+                        <li><strong>ขั้นที่ 2:</strong> AI จะถามคำถามเพื่อให้คิดเอง</li>
+                        <li><strong>ขั้นที่ 3:</strong> ตอบคำถามแล้วให้ AI ขยายความ</li>
+                        <li><strong>ขั้นที่ 4:</strong> สร้างความเข้าใจที่ลึกขึ้นผ่านการสนทนา</li>
+                    </div>
+                    
+                    <div class="conversation-example">
+                        <div class="user-message">👨‍🎓 ช่วยอธิบายเรื่องการเปลี่ยนแปลงสภาพภูมิอากาศแบบ Socratic Method</div>
+                        <div class="ai-message">🤖 มาเริ่มกันด้วยคำถาม: คุณคิดว่าอุณหภูมิโลกเปลี่ยนแปลงไปจากอะไร?</div>
+                        <div class="user-message">👨‍🎓 จากก๊าซเรือนกระจก?</div>
+                        <div class="ai-message">🤖 ดีมาก! แล้วคุณรู้ไหมว่าก๊าซเรือนกระจกมาจากไหน? และทำไมถึงเพิ่มขึ้นในช่วงนี้?</div>
+                        <div class="user-message">👨‍🎓 จากการเผาไหม้เชื้อเพลิงฟอสซิล?</div>
+                        <div class="ai-message">🤖 ถูกต้อง! ต่อไปคุณคิดว่าถ้าเราหยุดใช้เชื้อเพลิงฟอสซิลตอนนี้ อุณหภูมิจะลดลงทันทีไหม? ทำไม?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Styles & AI Adaptation -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> AI Adaptation ตามสไตล์การเรียนรู้</h2>
+                <p>AI ปรับวิธีสอนให้เหมาะกับคุณ</p>
+            </div>
+            <div class="section-content">
+                <div class="learning-style-grid">
+                    <div class="learning-style-card">
+                        <i class="fas fa-eye style-icon"></i>
+                        <h3>Visual Learner</h3>
+                        <p><strong>AI จะช่วย:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>สร้าง mind map และไดอะแกรม</li>
+                            <li>ใช้ emoji และสัญลักษณ์</li>
+                            <li>จัดข้อมูลเป็นตารางและกราฟ</li>
+                            <li>แนะนำวิดีโอและภาพประกอบ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learning-style-card">
+                        <i class="fas fa-headphones style-icon"></i>
+                        <h3>Auditory Learner</h3>
+                        <p><strong>AI จะช่วย:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>อธิบายด้วยเสียงและจังหวะ</li>
+                            <li>สร้างบทสนทนาและการอภิปราย</li>
+                            <li>ใช้การเล่าเรื่องและตัวอย่าง</li>
+                            <li>แนะนำ podcast และเสียง</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learning-style-card">
+                        <i class="fas fa-hands style-icon"></i>
+                        <h3>Kinesthetic Learner</h3>
+                        <p><strong>AI จะช่วย:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>สร้างแบบฝึกหัดให้ทำทันที</li>
+                            <li>แนะนำการทดลองและโปรเจกต์</li>
+                            <li>ใช้ simulation และเกม</li>
+                            <li>เน้นการเรียนรู้จากการทำ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="learning-style-card">
+                        <i class="fas fa-book style-icon"></i>
+                        <h3>Reading/Writing Learner</h3>
+                        <p><strong>AI จะช่วย:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>สร้างเนื้อหาที่อ่านง่าย</li>
+                            <li>ให้เขียนสรุปและบันทึก</li>
+                            <li>สร้างรายการและขั้นตอน</li>
+                            <li>แนะนำหนังสือและบทความ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- กำหนดการ Workshop -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-alt"></i> กำหนดการ Workshop</h2>
+                <p>1.5 ชั่วโมง สร้างติวเตอร์ส่วนตัว</p>
+            </div>
+            <div class="section-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">0-20 นาที</div>
+                        <h3><i class="fas fa-user-check"></i> Personal Learning Assessment</h3>
+                        <ul class="step-list">
+                            <li>ทำแบบประเมินสไตล์การเรียนรู้</li>
+                            <li>วิเคราะห์จุดแข็ง-จุดอ่อนการเรียน</li>
+                            <li>ตั้งเป้าหมายการเรียนรู้</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">20-40 นาที</div>
+                        <h3><i class="fas fa-robot"></i> AI Tutor Setup</h3>
+                        <ul class="step-list">
+                            <li>เลือก AI Platform ที่เหมาะสม</li>
+                            <li>สร้างโปรไฟล์การเรียนรู้</li>
+                            <li>เชื่อมต่อ Google Workspace</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">40-70 นาที</div>
+                        <h3><i class="fas fa-graduation-cap"></i> Learning Scenarios</h3>
+                        <ul class="step-list">
+                            <li>Scenario 1: วิเคราะห์สไตล์การเรียนรู้ (10 นาที)</li>
+                            <li>Scenario 2: สร้างแผนการเรียน (10 นาที)</li>
+                            <li>Scenario 3: สร้างแบบทดสอบ (10 นาที)</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">70-85 นาที</div>
+                        <h3><i class="fas fa-chart-line"></i> Progress Tracking</h3>
+                        <ul class="step-list">
+                            <li>ตั้งค่า Google Sheets สำหรับติดตาม</li>
+                            <li>สร้างระบบการแจ้งเตือน</li>
+                            <li>ทดสอบระบบที่สร้างขึ้น</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">85-90 นาที</div>
+                        <h3><i class="fas fa-rocket"></i> Next Steps</h3>
+                        <ul class="step-list">
+                            <li>วางแผนการใช้งาน 1 สัปดาห์</li>
+                            <li>แชร์ประสบการณ์และเทคนิค</li>
+                            <li>แนะนำ Workshop ต่อไป</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- การบ้านและพัฒนาต่อ -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-tasks"></i> การบ้าน: 7-Day AI Tutor Challenge</h2>
+                <p>ใช้ AI ติวเตอร์ในการเรียนจริง</p>
+            </div>
+            <div class="section-content">
+                <div class="ai-platforms">
+                    <div class="platform-card">
+                        <h3><i class="fas fa-calendar-week"></i> สัปดาห์ที่ 1</h3>
+                        <p><strong>เป้าหมาย:</strong> ทำให้ AI เป็นติวเตอร์ประจำ</p>
+                        <ul class="step-list">
+                            <li>ใช้ AI ช่วยอธิบายบทเรียนทุกวัน</li>
+                            <li>สร้างแบบทดสอบด้วย AI อย่างน้อย 3 ครั้ง</li>
+                            <li>ให้ AI ช่วยทำแผนการเรียน</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <h3><i class="fas fa-chart-line"></i> การติดตาม</h3>
+                        <p><strong>Metrics:</strong> วัดความก้าวหน้า</p>
+                        <ul class="step-list">
+                            <li>เปรียบเทียบเกรดก่อน-หลังใช้ AI</li>
+                            <li>จับเวลาการเรียนรู้เนื้อหาใหม่</li>
+                            <li>ประเมินความเข้าใจลึก</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <h3><i class="fas fa-users"></i> การแชร์</h3>
+                        <p><strong>Community Building:</strong> สร้างเครือข่าย</p>
+                        <ul class="step-list">
+                            <li>แชร์เทคนิคการใช้ AI ให้เพื่อน</li>
+                            <li>สร้างกลุ่มศึกษาด้วย AI</li>
+                            <li>ช่วยเหลือเพื่อนที่ยังไม่เก่ง</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <h3><i class="fas fa-star"></i> การพัฒนา</h3>
+                        <p><strong>Advanced:</strong> ยกระดับการใช้งาน</p>
+                        <ul class="step-list">
+                            <li>สร้าง Custom GPT เฉพาะสาขา</li>
+                            <li>ผสานหลาย AI Platform</li>
+                            <li>สร้างระบบการเรียนรู้ส่วนตัว</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-footer">
+            <h3><i class="fas fa-compass"></i> ขั้นตอนต่อไป</h3>
+            <p>เมื่อมีติวเตอร์ AI ส่วนตัวแล้ว พร้อมสำหรับการสรุปข้อมูลอย่างเทพ</p>
+            
+            <div class="nav-buttons">
+                <a href="../super-search/" class="nav-btn prev">
+                    <i class="fas fa-arrow-left"></i>
+                    Workshop ก่อนหน้า: Super Search
+                </a>
+                
+                <a href="../smart-summary/" class="nav-btn next">
+                    Workshop ต่อไป: Smart Summary
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3><i class="fas fa-user-graduate"></i> ยินดีต้อนรับสู่ยุคการมีติวเตอร์ AI ส่วนตัว!</h3>
+            <p>ตอนนี้คุณมีผู้ช่วยที่เข้าใจคุณและพร้อมช่วยเหลือ 24/7</p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                <i class="fas fa-user-tie"></i> จัดทำโดยอาจารย์ ดร.กริชบดินทร์ ผิวหอม มรภ ศรีสะเกษ
+            </p>
+        </div>
+    </div>
+</body>
+</html>
