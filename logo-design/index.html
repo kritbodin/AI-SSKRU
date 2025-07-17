@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Design Guide - คู่มือการออกแบบโลโก้สำหรับนักศึกษา</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: slideUp 1s ease 0.3s forwards;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            opacity: 0;
+            animation: slideUp 1s ease 0.6s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: slideUp 1s ease 0.9s forwards;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* RGC Cards */
+        .rgc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .rgc-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rgc-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .rgc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(45deg, var(--card-color-1), var(--card-color-2));
+        }
+
+        .rgc-card.r {
+            --card-color-1: #ff6b6b;
+            --card-color-2: #ee5a24;
+        }
+
+        .rgc-card.g {
+            --card-color-1: #4ecdc4;
+            --card-color-2: #26de81;
+        }
+
+        .rgc-card.c {
+            --card-color-1: #45b7d1;
+            --card-color-2: #96ceb4;
+        }
+
+        .rgc-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--card-color-1), var(--card-color-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rgc-card h3 {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .rgc-card p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* Examples Section */
+        .examples-section {
+            background: #f7fafc;
+        }
+
+        .example-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .example-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            position: relative;
+        }
+
+        .example-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .example-content {
+            padding: 0;
+        }
+
+        .prompt-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .prompt-table td {
+            padding: 25px;
+            vertical-align: top;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .prompt-table td:not(:last-child) {
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .prompt-desc {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .prompt-text {
+            color: #4a5568;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .relevance-col { border-left: 4px solid #ff6b6b; }
+        .goal-col { border-left: 4px solid #4ecdc4; }
+        .clarity-col { border-left: 4px solid #45b7d1; }
+
+        /* Usage Guide */
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .usage-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .usage-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .usage-card h3 {
+            color: #2d3748;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .usage-card ul {
+            list-style: none;
+        }
+
+        .usage-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #4a5568;
+        }
+
+        .usage-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: bold;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 15px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example::before {
+            content: 'ตัวอย่าง Prompt';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #4a5568;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .rgc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .usage-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prompt-table td {
+                padding: 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-palette"></i> Logo Guide
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">หน้าแรก</a></li>
+                <li><a href="#rgc">หลัก RGC</a></li>
+                <li><a href="#examples">ตัวอย่าง</a></li>
+                <li><a href="#guide">คู่มือ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1><i class="fas fa-magic"></i> คู่มือการออกแบบโลโก้</h1>
+            <p>สำหรับนักศึกษา ตามหลักการ RGC พร้อม Prompt ที่ใช้งานได้จริง</p>
+            <a href="#rgc" class="cta-button">
+                <i class="fas fa-rocket"></i> เริ่มเรียนรู้
+            </a>
+        </div>
+    </section>
+
+    <div class="main-content">
+        <!-- RGC Section -->
+        <section class="section" id="rgc">
+            <div class="container">
+                <h2 class="section-title fade-in">หลักการ RGC</h2>
+                <div class="rgc-grid">
+                    <div class="rgc-card r fade-in">
+                        <div class="rgc-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>R - Relevance</h3>
+                        <p><strong>ความเกี่ยวข้อง</strong><br>องค์ประกอบที่สะท้อนเอกลักษณ์และจุดประสงค์ของชมรม รวมถึงสัญลักษณ์ที่เกี่ยวข้องกับสาขาวิชา</p>
+                    </div>
+                    <div class="rgc-card g fade-in">
+                        <div class="rgc-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3>G - Goal & Gestalt</h3>
+                        <p><strong>เป้าหมายและรูปแบบ</strong><br>การจัดองค์ประกอบให้สื่อความหมาย สร้างความสวยงาม และเกิดการรับรู้ที่ชัดเจน</p>
+                    </div>
+                    <div class="rgc-card c fade-in">
+                        <div class="rgc-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>C - Clarity & Consistency</h3>
+                        <p><strong>ความชัดเจนและสอดคล้อง</strong><br>การใช้สีและฟอนต์ที่เหมาะสม อ่านง่าย และสามารถใช้งานได้หลากหลายสื่อ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section class="section examples-section" id="examples">
+            <div class="container">
+                <h2 class="section-title fade-in">ตัวอย่าง Prompt การออกแบบโลโก้</h2>
+                
+                <!-- Example 1: Programming -->
+                <div class="example-card fade-in">
+                    <div class="example-header">
+                        <div class="example-title">
+                            <i class="fas fa-code"></i>
+                            ชมรมโปรแกรมเมอร์นักศึกษา
+                        </div>
+                    </div>
+                    <div class="example-content">
+                        <table class="prompt-table">
+                            <tr>
+                                <td class="table-header">Prompt</td>
+                                <td class="table-header">R - Relevance</td>
+                                <td class="table-header">G - Goal & Gestalt</td>
+                                <td class="table-header">C - Clarity & Consistency</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="prompt-desc">เทคโนโลยีและการเขียนโปรแกรม</div>
+                                    <div class="prompt-text">ออกแบบโลโก้สำหรับชมรมเขียนโปรแกรมที่แสดงความทันสมัยและเทคโนโลยี</div>
+                                </td>
+                                <td class="relevance-col">
+                                    <div class="prompt-text">
+                                        • รูปแบบวงจรไฟฟ้าหรือพิกเซล<br>
+                                        • สัญลักษณ์ { } ผสานกับอักษร "ก"<br>
+                                        • ความเป็นดิจิทัล นวัตกรรม<br>
+                                        • เทคโนโลยีการเขียนโปรแกรม
+                                    </div>
+                                </td>
+                                <td class="goal-col">
+                                    <div class="prompt-text">
+                                        • สร้างความรู้สึกทันสมัย แม่นยำ<br>
+                                        • รูปแบบเรขาคณิตเรียบง่าย<br>
+                                        • จุดเด่นที่สัญลักษณ์โค้ด<br>
+                                        • ความเป็นอนาคต
+                                    </div>
+                                </td>
+                                <td class="clarity-col">
+                                    <div class="prompt-text">
+                                        • สีน้ำเงินไฟฟ้า ฟ้าอ่อน เทาเข้ม<br>
+                                        • ฟอนต์แบบ monospace<br>
+                                        • ใช้ได้ทั้งพื้นขาว-ดำ<br>
+                                        • ข้อความไทย-อังกฤษ
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Example 2: Art -->
+                <div class="example-card fade-in">
+                    <div class="example-header">
+                        <div class="example-title">
+                            <i class="fas fa-paint-brush"></i>
+                            ชมรมศิลปกรรมนักศึกษา
+                        </div>
+                    </div>
+                    <div class="example-content">
+                        <table class="prompt-table">
+                            <tr>
+                                <td>
+                                    <div class="prompt-desc">ความคิดสร้างสรรค์และศิลปะ</div>
+                                    <div class="prompt-text">สร้างโลโก้ที่เต็มไปด้วยความคิดสร้างสรรค์และจินตนาการทางศิลปะ</div>
+                                </td>
+                                <td class="relevance-col">
+                                    <div class="prompt-text">
+                                        • จานสีผสานพู่กัน รูปหัวใจ<br>
+                                        • เอฟเฟ็กต์สีน้ำกระเซ็น<br>
+                                        • เครื่องมือศิลปิน ผ้าใบ<br>
+                                        • ความเป็นศิลปะไทยร่วมสมัย
+                                    </div>
+                                </td>
+                                <td class="goal-col">
+                                    <div class="prompt-text">
+                                        • แสดงความสร้างสรรค์ เร้าใจ<br>
+                                        • สีสันสดใส มีชีวิตชีวา<br>
+                                        • การแสดงออกอย่างอิสระ<br>
+                                        • ความเป็นศิลปิน
+                                    </div>
+                                </td>
+                                <td class="clarity-col">
+                                    <div class="prompt-text">
+                                        • แดงเลือดหมู เหลืองอำพัน เขียวมรกต<br>
+                                        • ฟอนต์แบบวาดมือ มีเส้นโค้ง<br>
+                                        • พื้นผิวกระดาษหรือผ้าใบ<br>
+                                        • มีชีวิตชีวาแต่อ่านง่าย
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Example 3: Business -->
+                <div class="example-card fade-in">
+                    <div class="example-header">
+                        <div class="example-title">
+                            <i class="fas fa-chart-line"></i>
+                            ชมรมผู้ประกอบการรุ่นเยาว์
+                        </div>
+                    </div>
+                    <div class="example-content">
+                        <table class="prompt-table">
+                            <tr>
+                                <td>
+                                    <div class="prompt-desc">ภาวะผู้นำและความสำเร็จ</div>
+                                    <div class="prompt-text">สร้างโลโก้ที่แสดงภาวะผู้นำและความสำเร็จทางธุรกิจ</div>
+                                </td>
+                                <td class="relevance-col">
+                                    <div class="prompt-text">
+                                        • ลูกศรเพิ่มขึ้น ผสานหลอดไฟ/เฟือง<br>
+                                        • การจับมือ เครือข่ายธุรกิจ<br>
+                                        • ความเจริญเติบโต ความสำเร็จ<br>
+                                        • ภาวะผู้นำเยาวชน
+                                    </div>
+                                </td>
+                                <td class="goal-col">
+                                    <div class="prompt-text">
+                                        • ความเป็นองค์กรและพลวัต<br>
+                                        • การเติบโตและนวัตกรรม<br>
+                                        • ความมั่นคงและก้าวหน้า<br>
+                                        • ความเป็นผู้นำ
+                                    </div>
+                                </td>
+                                <td class="clarity-col">
+                                    <div class="prompt-text">
+                                        • น้ำเงินองค์กร เขียวสำเร็จ ทองเด่น<br>
+                                        • ฟอนต์ sans-serif แข็งแกร่ง<br>
+                                        • รูปทรงเรขาคณิตสมดุล<br>
+                                        • ลวดลายตารางเบา ๆ
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Example 4: Environment -->
+                <div class="example-card fade-in">
+                    <div class="example-header">
+                        <div class="example-title">
+                            <i class="fas fa-leaf"></i>
+                            ชมรมอนุรักษ์สิ่งแวดล้อม
+                        </div>
+                    </div>
+                    <div class="example-content">
+                        <table class="prompt-table">
+                            <tr>
+                                <td>
+                                    <div class="prompt-desc">ธรรมชาติและความยั่งยืน</div>
+                                    <div class="prompt-text">ออกแบบโลโก้ที่แสดงความรักธรรมชาติและความยั่งยืน</div>
+                                </td>
+                                <td class="relevance-col">
+                                    <div class="prompt-text">
+                                        • ต้นไม้งอกจากหนังสือเปิด<br>
+                                        • ใบไม้กลายเป็นผีเสื้อ<br>
+                                        • โลกหรือธรรมชาติผสมผสาน<br>
+                                        • การอนุรักษ์และศึกษา
+                                    </div>
+                                </td>
+                                <td class="goal-col">
+                                    <div class="prompt-text">
+                                        • เป็นธรรมชาติ ยั่งยืน มีความหวัง<br>
+                                        • การศึกษาด้านสิ่งแวดล้อม<br>
+                                        • ความกลมกลืนกับธรรมชาติ<br>
+                                        • การรับผิดชอบต่อโลก
+                                    </div>
+                                </td>
+                                <td class="clarity-col">
+                                    <div class="prompt-text">
+                                        • เขียวป่า น้ำเงินท้องฟ้า น้ำตาลดิน<br>
+                                        • ฟอนต์ธรรมชาติ แต่งใบไม้<br>
+                                        • สัญลักษณ์รีไซเคิล หยดน้ำ<br>
+                                        • ธรรมชาติแต่อ่านชัด
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Example 5: Music -->
+                <div class="example-card fade-in">
+                    <div class="example-header">
+                        <div class="example-title">
+                            <i class="fas fa-music"></i>
+                            ชมรมดนตรีนักศึกษา
+                        </div>
+                    </div>
+                    <div class="example-content">
+                        <table class="prompt-table">
+                            <tr>
+                                <td>
+                                    <div class="prompt-desc">ความไพเราะและศิลปะเสียง</div>
+                                    <div class="prompt-text">สร้างโลโก้ที่สื่อความไพเราะและศิลปะแห่งเสียงดนตรี</div>
+                                </td>
+                                <td class="relevance-col">
+                                    <div class="prompt-text">
+                                        • กุญแจเสียงไหลเป็นคลื่นเสียง<br>
+                                        • โน้ตดนตรีบินเป็นวงกลม<br>
+                                        • เครื่องดนตรี ไมโครโฟน<br>
+                                        • จังหวะและความไพเราะ
+                                    </div>
+                                </td>
+                                <td class="goal-col">
+                                    <div class="prompt-text">
+                                        • ความสง่างาม ศิลปะ จังหวะ<br>
+                                        • ความไหลลื่นและเคลื่อนไหว<br>
+                                        • ความสามัคคีและการ์โมนี่<br>
+                                        • ความสร้างสรรค์ทางดนตรี
+                                    </div>
+                                </td>
+                                <td class="clarity-col">
+                                    <div class="prompt-text">
+                                        • ม่วงราชา ส้มสดใส เหลืองอ่อน<br>
+                                        • ฟอนต์ไหลลื่น มีจังหวะ<br>
+                                        • รูปเงาเครื่องดนตรีเบา ๆ<br>
+                                        • สวยงามและอ่านง่าย
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Guide Section -->
+        <section class="section" id="guide">
+            <div class="container">
+                <h2 class="section-title fade-in">คู่มือการใช้งาน</h2>
+                <div class="usage-grid">
+                    <div class="usage-card fade-in">
+                        <h3><i class="fas fa-user-graduate"></i> สำหรับนักศึกษา</h3>
+                        <ul>
+                            <li>เลือกตัวอย่างที่ตรงกับสาขาที่สนใจ</li>
+                            <li>อ่านทั้ง 4 คอลัมน์เพื่อเข้าใจหลัก RGC</li>
+                            <li>รวม 4 คอลัมน์เป็น prompt เต็ม</li>
+                            <li>ปรับแต่งรายละเอียดตามต้องการ</li>
+                            <li>นำไปใช้กับ AI tools เช่น Midjourney, DALL-E</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="usage-card fade-in">
+                        <h3><i class="fas fa-lightbulb"></i> ตัวอย่างการใช้งาน</h3>
+                        <div class="code-example">
+"ออกแบบโลโก้ชมรมโปรแกรมเมอร์นักศึกษา โดยใช้รูปแบบวงจรไฟฟ้าผสานสัญลักษณ์ { } กับอักษรไทย สร้างความรู้สึกทันสมัยและแม่นยำด้วยรูปทรงเรขาคณิต ใช้สีน้ำเงินไฟฟ้า ฟ้าอ่อน และเทาเข้ม พร้อมฟอนต์แบบ monospace"
+                        </div>
+                    </div>
+                    
+                    <div class="usage-card fade-in">
+                        <h3><i class="fas fa-tools"></i> เคล็ดลับการปรับแต่ง</h3>
+                        <ul>
+                            <li>เปลี่ยนชื่อชมรมให้ตรงกับความเป็นจริง</li>
+                            <li>เพิ่มชื่อมหาวิทยาลัยหรือคณะ</li>
+                            <li>ระบุขนาดและรูปแบบไฟล์ที่ต้องการ</li>
+                            <li>ทดลองหลายรอบจนได้ผลลัพธ์ที่พอใจ</li>
+                            <li>ปรับสีตามเอกลักษณ์สถาบัน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p><i class="fas fa-palette"></i> คู่มือการออกแบบโลโก้ตามหลัก RGC</p>
+            <p>สำหรับการอบรมนักศึกษา</p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                <i class="fas fa-user-tie"></i> จัดทำโดยอาจารย์ ดร.กริชบดินทร์ ผิวหอม มรภ ศรีสะเกษ
+            </p>
+            <div class="footer-links">
+                <a href="#home">หน้าแรก</a>
+                <a href="#rgc">หลัก RGC</a>
+                <a href="#examples">ตัวอย่าง</a>
+                <a href="#guide">คู่มือ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar transparency on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
