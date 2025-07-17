@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop 4: Smart Summary Master - สรุปข้อมูลยาวๆ ใน 30 วินาที</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #805ad5;
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #805ad5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            color: #4a5568;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #805ad5, #d6f5d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .hero .subtitle {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .hero .description {
+            font-size: 1.1em;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .workshop-overview {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(128, 90, 213, 0.2);
+        }
+
+        .stat-item i {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: block;
+            color: #805ad5;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #805ad5, #d6f5d6);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .summary-techniques {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .technique-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #805ad5;
+            transition: all 0.3s ease;
+        }
+
+        .technique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .technique-icon {
+            font-size: 3em;
+            color: #805ad5;
+            margin-bottom: 15px;
+        }
+
+        .google-integration {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 2px solid #42a5f5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .google-integration h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .method-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            border-color: #805ad5;
+            box-shadow: 0 5px 15px rgba(128, 90, 213, 0.2);
+        }
+
+        .method-icon {
+            font-size: 2.5em;
+            color: #805ad5;
+            margin-bottom: 15px;
+        }
+
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .before-after .before {
+            background: #fed7d7;
+            border-left: 4px solid #fc8181;
+        }
+
+        .before-after .after {
+            background: #c6f6d5;
+            border-left: 4px solid #48bb78;
+        }
+
+        .before-after > div {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .hands-on-section {
+            background: linear-gradient(135deg, #fef5e7, #fed7af);
+        }
+
+        .mastery-challenge {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f6ad55;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .challenge-number {
+            background: #f6ad55;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .step-list li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .step-list li:last-child {
+            border-bottom: none;
+        }
+
+        .step-list li::before {
+            content: "📄";
+            position: absolute;
+            left: 0;
+            top: 10px;
+        }
+
+        .document-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .document-example::before {
+            content: attr(data-title);
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #4a5568;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .summary-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid;
+        }
+
+        .comparison-card.original {
+            background: #fef5e7;
+            border-color: #f6ad55;
+        }
+
+        .comparison-card.summary {
+            background: #f0fff4;
+            border-color: #48bb78;
+        }
+
+        .comparison-card.mindmap {
+            background: #e6fffa;
+            border-color: #4fd1c7;
+        }
+
+        .comparison-card.flashcards {
+            background: #faf5ff;
+            border-color: #805ad5;
+        }
+
+        .productivity-metrics {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #805ad5;
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #805ad5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .tip-box {
+            background: #ebf8ff;
+            border: 2px solid #63b3ed;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box strong {
+            color: #2b6cb0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #805ad5, #d6f5d6);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: #805ad5;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #805ad5;
+        }
+
+        .timeline-time {
+            background: #805ad5;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .navigation-footer {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.prev {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .nav-btn.home {
+            background: linear-gradient(135deg, #805ad5, #d6f5d6);
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            background: rgba(45, 55, 72, 0.95);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .summary-techniques {
+                grid-template-columns: 1fr;
+            }
+            
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-compress-alt"></i> Smart Summary
+            </div>
+            <div class="nav-links">
+                <a href="../ai-tutor/">← Workshop ก่อนหน้า</a>
+                <a href="../">หน้าหลัก</a>
+                <a href="../">เสร็จสิ้น! 🎉</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1><i class="fas fa-compress-alt"></i> Smart Summary Master</h1>
+            <p class="subtitle">สรุปข้อมูลยาวๆ ใน 30 วินาที</p>
+            <p class="description">
+                เทคนิคการสรุปและจัดระเบียบข้อมูลด้วย AI 
+                แปลงข้อมูลซับซ้อนให้เป็นความรู้ที่จดจำง่าย
+            </p>
+        </div>
+
+        <div class="workshop-overview">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #2d3748;">
+                <i class="fas fa-bullseye"></i> เป้าหมาย Workshop
+            </h2>
+            <div class="overview-stats">
+                <div class="stat-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>ความเร็ว</h3>
+                    <p>สรุปข้อมูล 100 หน้า<br><strong>ใน 5 นาที</strong></p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-brain"></i>
+                    <h3>ความจำ</h3>
+                    <p>จำได้นานขึ้น<br><strong>8 เท่า</strong></p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-eye"></i>
+                    <h3>ความเข้าใจ</h3>
+                    <p>เข้าใจสาระสำคัญ<br><strong>95% แม่นยำ</strong></p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-sync"></i>
+                    <h3>การทบทวน</h3>
+                    <p>ทบทวนได้เร็วขึ้น<br><strong>10 เท่า</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- เทคนิคการสรุปขั้นสูง -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-magic"></i> เทคนิคการสรุปขั้นสูง + Google Tools</h2>
+                <p>รวมพลัง AI กับ Google Workspace เพื่อการสรุปที่มีประสิทธิภาพ</p>
+            </div>
+            <div class="section-content">
+                <div class="summary-techniques">
+                    <div class="technique-card">
+                        <i class="fas fa-file-alt technique-icon"></i>
+                        <h3>Google Docs + AI Summarizer</h3>
+                        <p><strong>สำหรับ:</strong> สรุปเอกสารยาวและรายงาน</p>
+                        <p><strong>จุดเด่น:</strong> ทำงานร่วมกับ Google Workspace ได้เลย</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>อ่านไฟล์ PDF/DOCX จาก Google Drive</li>
+                                <li>สรุปเอกสารและบันทึกใน Google Docs</li>
+                                <li>แชร์สรุปใน Google Classroom</li>
+                                <li>สร้างงานนำเสนอใน Google Slides</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="technique-card">
+                        <i class="fas fa-project-diagram technique-icon"></i>
+                        <h3>Mind Map AI + Google Drawings</h3>
+                        <p><strong>สำหรับ:</strong> แปลงข้อมูลเป็นผังความคิด</p>
+                        <p><strong>จุดเด่น:</strong> เห็นภาพรวมและความสัมพันธ์</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>สร้าง Mind Map ใน Google Drawings</li>
+                                <li>ฝังใน Google Docs และ Slides</li>
+                                <li>ทำงานร่วมกันแบบ real-time</li>
+                                <li>ส่งออกเป็นรูปภาพหรือ PDF</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="technique-card">
+                        <i class="fas fa-layer-group technique-icon"></i>
+                        <h3>Notion AI + Google Sync</h3>
+                        <p><strong>สำหรับ:</strong> จัดระเบียบความรู้และสร้างฐานข้อมูล</p>
+                        <p><strong>จุดเด่น:</strong> ระบบจัดการความรู้ที่ครบครัน</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>นำเข้าเอกสารจาก Google Drive</li>
+                                <li>ซิงค์ข้อมูลกับ Google Calendar</li>
+                                <li>แชร์ผ่าน Google Sites</li>
+                                <li>ส่งออกเป็น Google Sheets</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="technique-card">
+                        <i class="fas fa-clone technique-icon"></i>
+                        <h3>Anki + Google Sheets</h3>
+                        <p><strong>สำหรับ:</strong> สร้าง Flashcards อัตโนมัติ</p>
+                        <p><strong>จุดเด่น:</strong> ระบบ Spaced Repetition ที่มีประสิทธิภาพ</p>
+                        
+                        <div class="google-integration">
+                            <h4><i class="fab fa-google"></i> Google Integration</h4>
+                            <ul style="margin-left: 20px;">
+                                <li>สร้าง Flashcards ใน Google Sheets</li>
+                                <li>ส่งออกเป็นไฟล์ Anki</li>
+                                <li>ติดตามความก้าวหน้าใน Google Sheets</li>
+                                <li>แชร์ชุดการ์ดให้เพื่อน</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- วิธีการสรุปต่างๆ -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-cogs"></i> วิธีการสรุปแบบต่างๆ</h2>
+                <p>เลือกวิธีสรุปที่เหมาะกับเนื้อหาและวัตถุประสงค์</p>
+            </div>
+            <div class="section-content">
+                <div class="summary-methods">
+                    <div class="method-card">
+                        <i class="fas fa-list-ul method-icon"></i>
+                        <h3>Bullet Point Summary</h3>
+                        <p><strong>เหมาะสำหรับ:</strong> ข้อมูลที่มีหัวข้อหลายหัวข้อ</p>
+                        <p><strong>ผลลัพธ์:</strong> จุดสำคัญที่ชัดเจน เข้าใจง่าย</p>
+                        
+                        <div class="document-example" data-title="ตัวอย่าง Prompt">
+"สรุปบทความนี้เป็นจุดสำคัญ 5 ข้อ พร้อมหัวข้อหลักและหัวข้อย่อย"
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <i class="fas fa-map method-icon"></i>
+                        <h3>Mind Map Summary</h3>
+                        <p><strong>เหมาะสำหรับ:</strong> เนื้อหาที่มีความสัมพันธ์ซับซ้อน</p>
+                        <p><strong>ผลลัพธ์:</strong> เห็นภาพรวมและความเชื่อมโยง</p>
+                        
+                        <div class="document-example" data-title="ตัวอย่าง Prompt">
+"แปลงเนื้อหานี้เป็น Mind Map โดยแสดงหัวข้อหลัก หัวข้อย่อย และความสัมพันธ์"
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <i class="fas fa-layer-group method-icon"></i>
+                        <h3>Hierarchical Summary</h3>
+                        <p><strong>เหมาะสำหรับ:</strong> เนื้อหาที่มีลำดับชั้นความสำคัญ</p>
+                        <p><strong>ผลลัพธ์:</strong> ความรู้ที่จัดระเบียบชัดเจน</p>
+                        
+                        <div class="document-example" data-title="ตัวอย่าง Prompt">
+"สรุปเป็นลำดับชั้น: หัวข้อหลัก → หัวข้อย่อย → รายละเอียด"
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <i class="fas fa-question-circle method-icon"></i>
+                        <h3>Q&A Summary</h3>
+                        <p><strong>เหมาะสำหรับ:</strong> การเตรียมสอบและทบทวน</p>
+                        <p><strong>ผลลัพธ์:</strong> คำถามและคำตอบที่ใช้ทบทวนได้</p>
+                        
+                        <div class="document-example" data-title="ตัวอย่าง Prompt">
+"สร้างคำถามและคำตอบ 10 ข้อ จากเนื้อหานี้ แบ่งเป็น 3 ระดับความยาก"
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <i class="fas fa-clock method-icon"></i>
+                        <h3>Timeline Summary</h3>
+                        <p><strong>เหมาะสำหรับ:</strong> เนื้อหาที่มีลำดับเวลา</p>
+                        <p><strong>ผลลัพธ์:</strong> ความเข้าใจการเปลี่ยนแปลงและพัฒนาการ</p>
+                        
+                        <div class="document-example" data-title="ตัวอย่าง Prompt">
+"สรุปเป็นไทม์ไลน์ พร้อมเหตุการณ์สำคัญและผลกระทบ"
+                        </div>
+                    </div>
+
+                    <div class="method-card">
+                        <i class="fas fa-balance-scale method-icon"></i>
+                        <h3>Compare & Contrast</h3>
+                        <p><strong>เหมาะสำหรับ:</strong> การเปรียบเทียบแนวคิดหรือทฤษฎี</p>
+                        <p><strong>ผลลัพธ์:</strong> ความแตกต่างและความเหมือนที่ชัดเจน</p>
+                        
+                        <div class="document-example" data-title="ตัวอย่าง Prompt">
+"สรุปในรูปแบบเปรียบเทียบ: ความเหมือน ความแตกต่าง ข้อดี ข้อเสีย"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตัวอย่างการแปลงข้อมูล -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-magic"></i> ตัวอย่างการแปลงข้อมูล</h2>
+                <p>ดูความแตกต่างระหว่างก่อนและหลังใช้ AI</p>
+            </div>
+            <div class="section-content">
+                <div class="before-after">
+                    <div class="before">
+                        <h3><i class="fas fa-times-circle"></i> ก่อนใช้ AI</h3>
+                        <p><strong>ปัญหา:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>อ่านเอกสาร 50 หน้า ใช้เวลา 3 ชั่วโมง</li>
+                            <li>จำได้เฉพาะรายละเอียดปลีกย่อย</li>
+                            <li>ไม่เห็นภาพรวมและความสัมพันธ์</li>
+                            <li>ลืมเร็ว ต้องอ่านใหม่บ่อย</li>
+                        </ul>
+                    </div>
+                    <div class="after">
+                        <h3><i class="fas fa-check-circle"></i> หลังใช้ AI</h3>
+                        <p><strong>ผลลัพธ์:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>สรุปเอกสาร 50 หน้า ใน 10 นาที</li>
+                            <li>ได้ประเด็นสำคัญครบถ้วน</li>
+                            <li>เห็นภาพรวมและความเชื่อมโยง</li>
+                            <li>จำได้นาน ทบทวนได้ง่าย</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="summary-comparison">
+                    <div class="comparison-card original">
+                        <h4><i class="fas fa-file-alt"></i> เอกสารต้นฉบับ</h4>
+                        <div class="document-example" data-title="บทความ 20 หน้า">
+"การปฏิวัติอุตสาหกรรมเป็นการเปลี่ยนแปลงครั้งใหญ่ที่เกิดขึ้นในศตวรรษที่ 18-19 โดยเริ่มต้นจากประเทศอังกฤษ การเปลี่ยนแปลงนี้ส่งผลกระทบต่อการผลิต เทคโนโลยี สังคม และวิถีชีวิตของมนุษย์อย่างมาก... (ต่อไปอีก 19 หน้า)"
+                        </div>
+                    </div>
+
+                    <div class="comparison-card summary">
+                        <h4><i class="fas fa-list"></i> สรุปจุดสำคัญ</h4>
+                        <div class="document-example" data-title="สรุป 5 นาที">
+• เริ่มที่อังกฤษ ศตวรรษที่ 18
+• นวัตกรรมสำคัญ: จักรไฟ รถไฟ
+• เปลี่ยนจากเกษตรสู่อุตสาหกรรม
+• ผลกระทบ: เมืองใหญ่ขึ้น แรงงานเพิ่ม
+• มรดก: รากฐานโลกสมัยใหม่
+                        </div>
+                    </div>
+
+                    <div class="comparison-card mindmap">
+                        <h4><i class="fas fa-project-diagram"></i> Mind Map</h4>
+                        <div class="document-example" data-title="ผังความคิด">
+การปฏิวัติอุตสาหกรรม
+├── สาเหตุ
+│   ├── ความต้องการสินค้า
+│   └── ทุนสะสม
+├── นวัตกรรม
+│   ├── จักรไฟ
+│   └── โรงงาน
+├── ผลกระทบ
+│   ├── สังคม
+│   └── สิ่งแวดล้อม
+└── มรดก
+    └── โลกสมัยใหม่
+                        </div>
+                    </div>
+
+                    <div class="comparison-card flashcards">
+                        <h4><i class="fas fa-clone"></i> Flashcards</h4>
+                        <div class="document-example" data-title="การ์ดทบทวน">
+Q: การปฏิวัติอุตสาหกรรมเริ่มที่ไหน?
+A: อังกฤษ ศตวรรษที่ 18
+
+Q: นวัตกรรมสำคัญคืออะไร?
+A: จักรไฟ รถไฟ โรงงาน
+
+Q: ผลกระทบหลักคืออะไร?
+A: เปลี่ยนจากเกษตรสู่อุตสาหกรรม
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- กิจกรรมปฏิบัติ -->
+        <div class="content-section hands-on-section">
+            <div class="section-header">
+                <h2><i class="fas fa-hands"></i> กิจกรรมปฏิบัติ: Summary Mastery Challenge</h2>
+                <p>ฝึกฝนทักษะการสรุปกับเนื้อหาจริงจากการเรียน</p>
+            </div>
+            <div class="section-content">
+                <div class="mastery-challenge">
+                    <div class="challenge-number">1</div>
+                    <h3><i class="fas fa-book-open"></i> Challenge: Academic Paper Summary</h3>
+                    <p><strong>โจทย์:</strong> เลือกบทความวิชาการ 15-20 หน้า และสรุปด้วยเทคนิคต่างๆ</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> อัปโหลดไฟล์ PDF จาก Google Drive ให้ AI</li>
+                        <li><strong>ขั้นที่ 2:</strong> ขอให้ AI สรุปเป็นจุดสำคัญ 7 ข้อ</li>
+                        <li><strong>ขั้นที่ 3:</strong> สร้าง Mind Map ด้วย AI</li>
+                        <li><strong>ขั้นที่ 4:</strong> ทำ Flashcards 15 ใบ</li>
+                        <li><strong>ขั้นที่ 5:</strong> เปรียบเทียบกับการอ่านแบบเดิม</li>
+                    </div>
+                    
+                    <div class="productivity-metrics">
+                        <h4><i class="fas fa-chart-line"></i> Metrics ที่ต้องวัด</h4>
+                        <div class="metric-item">
+                            <div class="metric-icon">⏱️</div>
+                            <div>
+                                <strong>เวลาที่ใช้</strong><br>
+                                เป้าหมาย: ลดเวลาลง 70%
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">🧠</div>
+                            <div>
+                                <strong>ความเข้าใจ</strong><br>
+                                เป้าหมาย: จำได้ 90% ของประเด็นสำคัญ
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">🔄</div>
+                            <div>
+                                <strong>การทบทวน</strong><br>
+                                เป้าหมาย: ทบทวนได้ใน 5 นาที
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mastery-challenge">
+                    <div class="challenge-number">2</div>
+                    <h3><i class="fas fa-graduation-cap"></i> Challenge: Multi-Source Summary</h3>
+                    <p><strong>โจทย์:</strong> รวมข้อมูลจาก 3 แหล่งต่างๆ เป็นสรุปเดียวที่ครบถ้วน</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> หาข้อมูลจาก 3 แหล่ง (หนังสือ, บทความ, วิดีโอ)</li>
+                        <li><strong>ขั้นที่ 2:</strong> ให้ AI สรุปแต่ละแหล่งแยกกัน</li>
+                        <li><strong>ขั้นที่ 3:</strong> ขอให้ AI รวมและเปรียบเทียบ</li>
+                        <li><strong>ขั้นที่ 4:</strong> ชี้จุดที่สอดคล้องและขัดแย้งกัน</li>
+                        <li><strong>ขั้นที่ 5:</strong> สร้างสรุปรวมที่ครอบคลุม</li>
+                    </div>
+                    
+                    <div class="document-example" data-title="ตัวอย่างการรวมข้อมูล">
+📚 แหล่งที่ 1: หนังสือ → AI สรุป → ทฤษฎี A
+📄 แหล่งที่ 2: บทความ → AI สรุป → ทฤษฎี B  
+🎥 แหล่งที่ 3: วิดีโอ → AI สรุป → ทฤษฎี C
+
+🤖 AI รวมและเปรียบเทียบ:
+- จุดเหมือน: X, Y, Z
+- จุดต่าง: A vs B, C vs D
+- สรุปรวม: ครอบคลุมทุกมุมมอง
+                    </div>
+                </div>
+
+                <div class="mastery-challenge">
+                    <div class="challenge-number">3</div>
+                    <h3><i class="fas fa-history"></i> Challenge: Progressive Summary</h3>
+                    <p><strong>โจทย์:</strong> สรุปเนื้อหาที่มีการพัฒนาผ่านช่วงเวลา (เช่น ประวัติศาสตร์, วิทยาศาสตร์)</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> ระบุช่วงเวลาและเหตุการณ์สำคัญ</li>
+                        <li><strong>ขั้นที่ 2:</strong> ให้ AI สร้างไทม์ไลน์</li>
+                        <li><strong>ขั้นที่ 3:</strong> วิเคราะห์สาเหตุและผลกระทบ</li>
+                        <li><strong>ขั้นที่ 4:</strong> เชื่อมโยงเหตุการณ์ต่างๆ</li>
+                        <li><strong>ขั้นที่ 5:</strong> สรุปแนวโน้มและบทเรียน</li>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong><i class="fas fa-lightbulb"></i> เคล็ดลับ:</strong>
+                        ใช้ Google Sheets สร้างไทม์ไลน์ แล้วให้ AI ช่วยเติมรายละเอียดและวิเคราะห์ความสัมพันธ์
+                    </div>
+                </div>
+
+                <div class="mastery-challenge">
+                    <div class="challenge-number">4</div>
+                    <h3><i class="fas fa-users"></i> Challenge: Team Summary Project</h3>
+                    <p><strong>โจทย์:</strong> ทำงานเป็นทีมสรุปหัวข้อใหญ่ แล้วรวมกันเป็นสรุปเดียว</p>
+                    
+                    <div class="step-list">
+                        <li><strong>ขั้นที่ 1:</strong> แบ่งหัวข้อใหญ่เป็นส่วนย่อย (4-5 คน)</li>
+                        <li><strong>ขั้นที่ 2:</strong> แต่ละคนใช้ AI สรุปส่วนของตัวเอง</li>
+                        <li><strong>ขั้นที่ 3:</strong> รวมไฟล์ใน Google Drive</li>
+                        <li><strong>ขั้นที่ 4:</strong> ให้ AI รวมสรุปทั้งหมด</li>
+                        <li><strong>ขั้นที่ 5:</strong> ตรวจสอบและปรับปรุงร่วมกัน</li>
+                    </div>
+                    
+                    <div class="google-integration">
+                        <h4><i class="fab fa-google"></i> Google Collaboration Workflow</h4>
+                        <div class="productivity-metrics">
+                            <div class="metric-item">
+                                <div class="metric-icon">📂</div>
+                                <div>
+                                    <strong>Google Drive</strong><br>
+                                    แชร์ไฟล์และทำงานร่วมกัน
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-icon">📝</div>
+                                <div>
+                                    <strong>Google Docs</strong><br>
+                                    เขียนสรุปและแก้ไขร่วมกัน
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-icon">📊</div>
+                                <div>
+                                    <strong>Google Slides</strong><br>
+                                    นำเสนอผลงานสรุป
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- กำหนดการ Workshop -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-alt"></i> กำหนดการ Workshop</h2>
+                <p>1.5 ชั่วโมง ฝึกฝนเทคนิคการสรุปที่หลากหลาย</p>
+            </div>
+            <div class="section-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">0-15 นาที</div>
+                        <h3><i class="fas fa-magic"></i> Demo: Before & After</h3>
+                        <ul class="step-list">
+                            <li>แสดงการสรุปแบบเดิม vs ด้วย AI</li>
+                            <li>เปรียบเทียบเวลาและคุณภาพ</li>
+                            <li>ทดสอบเครื่องมือต่างๆ</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">15-30 นาที</div>
+                        <h3><i class="fas fa-tools"></i> Tools & Techniques</h3>
+                        <ul class="step-list">
+                            <li>แนะนำเทคนิคการสรุปแบบต่างๆ</li>
+                            <li>ฝึกเขียน Prompt สำหรับการสรุป</li>
+                            <li>เชื่อมต่อ Google Workspace</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">30-75 นาที</div>
+                        <h3><i class="fas fa-trophy"></i> Mastery Challenges</h3>
+                        <ul class="step-list">
+                            <li>Challenge 1: Academic Paper (15 นาที)</li>
+                            <li>Challenge 2: Multi-Source (15 นาที)</li>
+                            <li>Challenge 3: Progressive (10 นาที)</li>
+                            <li>Challenge 4: Team Project (5 นาที)</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">75-85 นาที</div>
+                        <h3><i class="fas fa-star"></i> Showcase & Best Practices</h3>
+                        <ul class="step-list">
+                            <li>นำเสนอผลงานที่ดีที่สุด</li>
+                            <li>แชร์เทคนิคที่ค้นพบ</li>
+                            <li>ประเมินผลการเรียนรู้</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">85-90 นาที</div>
+                        <h3><i class="fas fa-graduation-cap"></i> Master's Journey</h3>
+                        <ul class="step-list">
+                            <li>วางแผนการนำไปใช้จริง</li>
+                            <li>สร้างระบบการสรุปส่วนตัว</li>
+                            <li>สรุปการเรียนรู้ทั้ง 4 Workshop</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- การบ้านและพัฒนาต่อ -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-tasks"></i> การบ้าน: 30-Day Summary Master</h2>
+                <p>ฝึกฝนเป็นเวลา 30 วัน เพื่อเป็นผู้เชี่ยวชาญการสรุป</p>
+            </div>
+            <div class="section-content">
+                <div class="summary-techniques">
+                    <div class="technique-card">
+                        <h3><i class="fas fa-calendar-week"></i> สัปดาห์ที่ 1-2</h3>
+                        <p><strong>เป้าหมาย:</strong> ฝึกเทคนิคพื้นฐาน</p>
+                        <ul class="step-list">
+                            <li>สรุปบทเรียนทุกวิชาด้วย AI</li>
+                            <li>ลองทุกวิธีการสรุป (5 แบบ)</li>
+                            <li>จับเวลาและเปรียบเทียบผล</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <h3><i class="fas fa-chart-line"></i> สัปดาห์ที่ 3-4</h3>
+                        <p><strong>เป้าหมาย:</strong> ยกระดับและสร้างระบบ</p>
+                        <ul class="step-list">
+                            <li>สร้างระบบการสรุปส่วนตัว</li>
+                            <li>รวมเข้ากับ Google Workspace</li>
+                            <li>สร้างฐานข้อมูลความรู้</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <h3><i class="fas fa-users"></i> การแชร์และสอน</h3>
+                        <p><strong>เป้าหมาย:</strong> กลายเป็นที่ปรึกษา</p>
+                        <ul class="step-list">
+                            <li>สอนเทคนิคให้เพื่อน 5 คน</li>
+                            <li>สร้างกลุ่มแชร์ทคนิคการสรุป</li>
+                            <li>ช่วยเพื่อนปรับปรุงการเรียน</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <h3><i class="fas fa-trophy"></i> ผลลัพธ์ที่คาดหวัง</h3>
+                        <p><strong>เป้าหมาย:</strong> เป็น Summary Master</p>
+                        <ul class="step-list">
+                            <li>สรุปข้อมูลได้เร็วขึ้น 90%</li>
+                            <li>จำได้นานขึ้น 5 เท่า</li>
+                            <li>ประหยัดเวลาเรียน 60%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-footer">
+            <h3><i class="fas fa-graduation-cap"></i> ยินดีด้วย! เสร็จสิ้น Smart Learning Hub</h3>
+            <p>ตอนนี้คุณเป็น Master ทั้ง 4 ด้าน: Camera, Search, AI Tutor, และ Summary</p>
+            
+            <div class="nav-buttons">
+                <a href="../ai-tutor/" class="nav-btn prev">
+                    <i class="fas fa-arrow-left"></i>
+                    Workshop ก่อนหน้า: AI Tutor
+                </a>
+                
+                <a href="../" class="nav-btn home">
+                    <i class="fas fa-home"></i>
+                    กลับหน้าหลัก
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3><i class="fas fa-star"></i> ยินดีต้อนรับสู่ยุค Smart Learning Masters!</h3>
+            <p>ตอนนี้คุณมีทักษะครบครันสำหรับการเรียนรู้ในศตวรรษที่ 21</p>
+            <div style="margin-top: 20px; font-size: 1.1em;">
+                <p><strong>🎯 ทักษะที่คุณได้รับ:</strong></p>
+                <p>📱 Smart Camera • 🔍 Super Search • 🤖 AI Tutor • 📄 Smart Summary</p>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                <i class="fas fa-user-tie"></i> จัดทำโดยอาจารย์ ดร.กริชบดินทร์ ผิวหอม มรภ ศรีสะเกษ
+            </p>
+        </div>
+    </div>
+</body>
+</html>
