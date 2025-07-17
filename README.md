@@ -4,7 +4,7 @@
 
 ## 📚 คู่มือที่มีในชุดนี้
 ### 🖼️ [workshop 1 smart-camera]
-### 🖼️ [workshop 2 super-search]
+### 🖼️ [workshop 2 super-search](super-search/index.html)
 ### 🖼️ [workshop 3 ai-tutor]
 ### 🖼️ [workshop 4 smart-summary]
 
