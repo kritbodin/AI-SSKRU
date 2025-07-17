@@ -7,6 +7,9 @@
 ### 🖼️ [workshop 2 super-search](https://kritbodin.github.io/AI-SSKRU/super-search/index.html)
 ### 🖼️ [workshop 3 ai-tutor](https://kritbodin.github.io/AI-SSKRU/ai-tutor/index.html)
 ### 🖼️ [workshop 4 smart-summary](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
+### 🖼️ [workshop 5 ChatGPT-PPT](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
+
+#### 🖼️ [ตัวอย่าง prompt สำหรับนักศึกษา](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
 
 ### 🖼️ การออกแบบโลโก้
 [![Logo Design](https://img.shields.io/badge/ดูคู่มือ-โลโก้-blue?style=for-the-badge)](./logo-design/)
@@ -43,8 +46,5 @@
 ## 📞 ติดต่อ
 
 - **อีเมล**: kritbodin.p@ssru.ac.th
-- **Facebook**: [ชื่อเพจ]
-- **Line**: [Line ID]
-
 ---
 ⭐ ถ้าคู่มือนี้มีประโยชน์ กด Star ให้ด้วยนะครับ!
