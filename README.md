@@ -3,10 +3,10 @@
 > จัดทำโดยอาจารย์ ดร.กริชบดินทร์ ผิวหอม มรภ ศรีสะเกษ
 
 ## 📚 คู่มือที่มีในชุดนี้
-### 🖼️ [workshop 1 smart-camera]
-### 🖼️ [workshop 2 super-search](super-search/index.html)
-### 🖼️ [workshop 3 ai-tutor]
-### 🖼️ [workshop 4 smart-summary]
+### 🖼️ [workshop 1 smart-camera](https://kritbodin.github.io/AI-SSKRU/smart-camera/index.html)
+### 🖼️ [workshop 2 super-search](https://kritbodin.github.io/AI-SSKRU/super-search/index.html)
+### 🖼️ [workshop 3 ai-tutor](https://kritbodin.github.io/AI-SSKRU/ai-tutor/index.html)
+### 🖼️ [workshop 4 smart-summary](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
 
 ### 🖼️ การออกแบบโลโก้
 [![Logo Design](https://img.shields.io/badge/ดูคู่มือ-โลโก้-blue?style=for-the-badge)](./logo-design/)
