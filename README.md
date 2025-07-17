@@ -9,7 +9,7 @@
 ### 🖼️ [workshop 4 smart-summary](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
 ### 🖼️ [workshop 5 ChatGPT-PPT](https://kritbodin.github.io/AI-SSKRU/PPT-GPT/index.html)
 
-#### 🖼️ [ตัวอย่าง prompt สำหรับนักศึกษา](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
+#### 🖼️ [ตัวอย่าง prompt สำหรับนักศึกษา](https://kritbodin.github.io/AI-SSKRU/Prompt-ST/index.html)
 
 ### 🖼️ การออกแบบโลโก้
 [![Logo Design](https://img.shields.io/badge/ดูคู่มือ-โลโก้-blue?style=for-the-badge)](./logo-design/)
