@@ -7,7 +7,7 @@
 ### 🖼️ [workshop 2 super-search](https://kritbodin.github.io/AI-SSKRU/super-search/index.html)
 ### 🖼️ [workshop 3 ai-tutor](https://kritbodin.github.io/AI-SSKRU/ai-tutor/index.html)
 ### 🖼️ [workshop 4 smart-summary](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html)
-### 🖼️ [workshop 5 ChatGPT-PPT](https://kritbodin.github.io/AI-SSKRU/PPT-GPT/index.html)
+### 🖼️ [workshop 5 ChatGPT-PPT](https://kritbodin.github.io/AI-SSKRU/chatGPT-PPT/index.html)
 ### 🖼️ [workshop 6 Copilot-APP](https://kritbodin.github.io/AI-SSKRU/MS-Copilot-app/index.html)
 
 #### 🖼️ [ตัวอย่าง prompt สำหรับนักศึกษา](https://kritbodin.github.io/AI-SSKRU/Prompt-ST/index.html)
