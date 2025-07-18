@@ -9,15 +9,15 @@
 
 ### 🔗 **Workshops หลัก**
 
-| Workshop | คำอธิบาย           | ลิงก์คู่มือ |
-|:---------|:-------------------|:------------|
-| 📷 Smart Camera     | กล้อง AI อัจฉริยะ            | [read](https://kritbodin.github.io/AI-SSKRU/smart-camera/index.html) |
-| 🔍 Super Search     | ค้นหาอัจฉริยะ                | [read](https://kritbodin.github.io/AI-SSKRU/super-search/index.html) |
-| 🤖 AI Tutor         | ติวเตอร์ AI                   | [read](https://kritbodin.github.io/AI-SSKRU/ai-tutor/index.html) |
-| 📄 Smart Summary    | สรุปเนื้อหาอัตโนมัติ         | [read](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html) |
-| 📊 ChatGPT PPT      | สร้างสไลด์อัตโนมัติด้วย AI    | [read](https://kritbodin.github.io/AI-SSKRU/chatGPT-PPT/index.html) |
-| 🚀 Copilot APP      | แอป Copilot เพื่อการทำงาน      | [read](https://kritbodin.github.io/AI-SSKRU/MS-Copilot-app/index.html) |
-| 🎵 Gemini Suno      | AI สร้างเพลงและเสียง           | [read](https://kritbodin.github.io/AI-SSKRU/Gemin-Suno/index.html) |
+| # | Workshop | คำอธิบาย           | ลิงก์คู่มือ |
+|:---------|:---------|:-------------------|:------------|
+| 1 |📷 Smart Camera     | กล้อง AI อัจฉริยะ            | [read](https://kritbodin.github.io/AI-SSKRU/smart-camera/index.html) |
+| 2 |🔍 Super Search     | ค้นหาอัจฉริยะ                | [read](https://kritbodin.github.io/AI-SSKRU/super-search/index.html) |
+| 3 |🤖 AI Tutor         | ติวเตอร์ AI                   | [read](https://kritbodin.github.io/AI-SSKRU/ai-tutor/index.html) |
+| 4 | 📄 Smart Summary    | สรุปเนื้อหาอัตโนมัติ         | [read](https://kritbodin.github.io/AI-SSKRU/smart-summary/index.html) |
+| 5 | 📊 ChatGPT PPT      | สร้างสไลด์อัตโนมัติด้วย AI    | [read](https://kritbodin.github.io/AI-SSKRU/chatGPT-PPT/index.html) |
+| 6 | 🚀 Copilot APP      | แอป Copilot เพื่อการทำงาน      | [read](https://kritbodin.github.io/AI-SSKRU/MS-Copilot-app/index.html) |
+| 7 | 🎵 Gemini Suno      | AI สร้างเพลงและเสียง           | [read](https://kritbodin.github.io/AI-SSKRU/Gemin-Suno/index.html) |
 
 ---
 
