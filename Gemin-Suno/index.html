@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop: การใช้งาน Suno AI สร้างเพลงด้วย AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 Q50,10 80,20 T80,50 Q70,80 50,80 T20,50 Z" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: musicFloat 25s infinite linear;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s ease infinite;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            color: #fff;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .info-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .info-card strong {
+            color: #d63384;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .step-section {
+            margin-bottom: 3rem;
+            border: 3px solid #e9ecef;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .step-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .step-number {
+            background: rgba(255,255,255,0.3);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border: 3px solid rgba(255,255,255,0.5);
+        }
+
+        .step-content {
+            padding: 2rem;
+            background: #fff;
+        }
+
+        .prompt-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #ffd700;
+        }
+
+        .prompt-box h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt-box h4::before {
+            content: "✨";
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .command-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            border: 2px solid #4a5568;
+            position: relative;
+        }
+
+        .command-box::before {
+            content: "💬 Prompt";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #4a5568;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #ffd700;
+        }
+
+        .lyrics-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border: 3px solid #ff9a9e;
+        }
+
+        .lyrics-box h4 {
+            margin-bottom: 1rem;
+            color: #d63384;
+            display: flex;
+            align-items: center;
+        }
+
+        .lyrics-box h4::before {
+            content: "🎵";
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .tips {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #4caf50;
+            margin: 1.5rem 0;
+        }
+
+        .tips h4 {
+            color: #2e8b57;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tips h4::before {
+            content: "💡";
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 3px solid #ff9800;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning::before {
+            content: "⚠️";
+            font-size: 2.5rem;
+            margin-right: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .credits-section {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .credits-table {
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .credits-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .credits-table th,
+        .credits-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        .credits-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .summary h3 {
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @keyframes musicFloat {
+            0% { transform: translateX(-100px) rotate(0deg); }
+            100% { transform: translateX(100px) rotate(360deg); }
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .info-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #d63384;
+        }
+
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .genre-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+
+        .genre-tag:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>🎵 Workshop: การใช้งาน Suno AI</h1>
+                <p>สร้างเพลงด้วย AI ง่ายๆ ใน 5 นาที!</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- ข้อมูลเบื้องต้น -->
+            <div class="intro-section">
+                <h2>🎤 Suno AI คืออะไร?</h2>
+                <p>Suno เป็นแพลตฟอร์ม AI ที่ช่วยให้คุณสร้างเพลงได้ง่ายๆ เพียงใส่เนื้อเพลงหรือคำอธิบาย AI จะสร้างเพลงที่สมบูรณ์พร้อมทำนอง และเสียงร้องให้คุณ!</p>
+            </div>
+
+            <!-- ข้อมูลทั่วไป -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <span class="icon">⏰</span>
+                    <strong>ระยะเวลา:</strong>
+                    1.5 ชั่วโมง
+                </div>
+                <div class="info-card">
+                    <span class="icon">🎯</span>
+                    <strong>กลุ่มเป้าหมาย:</strong>
+                    ผู้ที่สนใจสร้างเพลงด้วย AI
+                </div>
+                <div class="info-card">
+                    <span class="icon">📚</span>
+                    <strong>ความรู้พื้นฐาน:</strong>
+                    ไม่จำเป็นต้องมีพื้นฐานดนตรี
+                </div>
+                <div class="info-card">
+                    <span class="icon">💻</span>
+                    <strong>อุปกรณ์:</strong>
+                    คอมพิวเตอร์ + อินเทอร์เน็ต + บัญชี Google
+                </div>
+            </div>
+
+            <!-- ความสามารถของ Suno -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="icon">🎼</span>
+                    <h3>สร้างเพลงอัตโนมัติ</h3>
+                    <p>ใส่เนื้อเพลงหรือคำอธิบาย AI จะสร้างทำนองและเสียงร้องให้</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🎨</span>
+                    <h3>หลากหลายแนวเพลง</h3>
+                    <p>รองรับแนวเพลงมากมาย จาก Pop, Rock, Hip-hop ไปจนถึง Classical</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🎧</span>
+                    <h3>คุณภาพเสียงสูง</h3>
+                    <p>เพลงที่สร้างมีคุณภาพเสียงใสและธรรมชาติ</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">⚡</span>
+                    <h3>รวดเร็ว</h3>
+                    <p>สร้างเพลงได้ภายใน 1-2 นาที</p>
+                </div>
+            </div>
+
+            <!-- ขั้นตอนที่ 1 -->
+            <div class="step-section">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div>เตรียมเนื้อเพลงด้วย Gemini AI</div>
+                </div>
+                <div class="step-content">
+                    <p>เริ่มต้นด้วยการใช้ Gemini ช่วยเขียนเนื้อเพลงที่สร้างสรรค์และน่าสนใจ</p>
+
+                    <div class="prompt-box">
+                        <h4>ตัวอย่าง Prompt สำหรับ Gemini</h4>
+                        <div class="command-box">
+ช่วยเขียนเนื้อเพลงแนว [แนวเพลง] เรื่อง [หัวข้อ] ที่มี:
+- 2 วอส (Verse)
+- 1 คอรัส (Chorus) 
+- 1 บริดจ์ (Bridge)
+- โทนเสียง: [ร่าเริง/เศร้า/สนุกสนาน]
+- ความยาวประมาณ 16-24 บรรทัด
+                        </div>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h4>ตัวอย่าง Prompt เฉพาะเจาะจง</h4>
+                        <div class="command-box">
+ช่วยเขียนเนื้อเพลงป๊อปไทยเรื่อง "ความฝันของเยาวชน" ที่มี:
+- Verse 1: เล่าถึงความฝันในวัยเรียน
+- Chorus: สร้างกำลังใจและความหวัง
+- Verse 2: พูดถึงการฝ่าฟันอุปสรรค
+- Bridge: ข้อความให้กำลังใจ
+- โทนเสียงร่าเริงและให้กำลังใจ
+                        </div>
+                    </div>
+
+                    <div class="lyrics-box">
+                        <h4>ตัวอย่างเนื้อเพลงที่ได้</h4>
+                        <div style="white-space: pre-line; font-style: italic;">
+<strong>[Verse 1]</strong>
+ในห้องเรียนเล็กๆ นี้ มีความฝันใหญ่โต
+เด็กน้อยจับดินสอ วาดอนาคตที่สดใส
+แม้ว่าจะยากลำบาก แต่ใจเรายังแกร่ง
+เพราะความฝันของเรา ไม่มีวันจะแพ้ภัย
+
+<strong>[Chorus]</strong>
+ฝันไว้ให้สูง บินไปให้ไกล
+อย่ากลัวที่จะล้ม อย่ากลัวที่จะผิด
+ความฝันของเยาวชน คือพลังแห่งความหวัง
+วันนี้เราจะเดิน เพื่อวันพรุ่งนี้ที่สดใส
+
+<strong>[Verse 2]</strong>
+ถึงแม้จะมีอุปสรรค มาขวางกั้นทางเดิน
+แต่เราจะไม่ย่อท้อ จะเดินต่อไปเรื่อยๆ
+เพราะเรารู้ดีในใจ ว่าความฝันนั้นสำคัญ
+มันคือแสงสว่างในใจ ที่จะนำพาเราไปสู่ฝัน
+
+<strong>[Bridge]</strong>
+เยาวชนคือหัวใจ ของประเทศชาติ
+ความฝันของเราคือ อนาคตที่สดใส
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <h4>เคล็ดลับการเขียนเนื้อเพลงที่ดี</h4>
+                        <ul>
+                            <li>ใช้ภาษาที่เข้าใจง่าย และสื่อความหมายชัดเจน</li>
+                            <li>มีจังหวะและสัมผัสที่ไพเราะ</li>
+                            <li>เล่าเรื่องที่สามารถเชื่อมโยงกับผู้ฟัง</li>
+                            <li>ใช้อารมณ์และความรู้สึกในการเขียน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ขั้นตอนที่ 2 -->
+            <div class="step-section">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div>เปิดเว็บไซต์ Suno และเข้าสู่ระบบ</div>
+                </div>
+                <div class="step-content">
+                    <ol class="step-list">
+                        <li>เปิดเบราว์เซอร์และไปที่ <strong>https://suno.com</strong></li>
+                        <li>คลิกปุ่ม "Sign Up" หรือ "Log In" ที่มุมบนขวา</li>
+                        <li>เลือกเข้าสู่ระบบด้วย Google Account</li>
+                        <li>อนุญาตให้ Suno เข้าถึงข้อมูลพื้นฐาน</li>
+                        <li>รอสักครู่เพื่อให้ระบบตั้งค่าบัญชีผู้ใช้</li>
+                    </ol>
+
+                    <div class="warning">
+                        <div>
+                            <strong>หมายเหตุ:</strong> การสมัครใช้งาน Suno ฟรี คุณจะได้รับเครดิตเริ่มต้นสำหรับสร้างเพลง หลังจากใช้หมดจะต้องรอเวลาหรือซื้อเครดิตเพิ่ม
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ขั้นตอนที่ 3 -->
+            <div class="step-section">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div>สร้างเพลงใหม่ใน Suno</div>
+                </div>
+                <div class="step-content">
+                    <ol class="step-list">
+                        <li>คลิกปุ่ม <strong>"Create"</strong> หรือ <strong>"+ Create New Song"</strong></li>
+                        <li>เลือกโหมด <strong>"Custom"</strong> เพื่อใส่เนื้อเพลงเอง</li>
+                        <li>วางเนื้อเพลงที่เตรียมไว้ลงในช่อง <strong>"Lyrics"</strong></li>
+                        <li>เลือกแนวเพลง (Genre) เช่น Pop, Rock, Hip-hop, Country</li>
+                        <li>ใส่ชื่อเพลงในช่อง <strong>"Title"</strong></li>
+                        <li>เลือกสไตล์เสียงร้อง (Vocal Style) ถ้าต้องการ</li>
+                    </ol>
+
+                    <div class="tips">
+                        <h4>แนวเพลงยอดนิยม</h4>
+                        <div class="genre-tags">
+                            <span class="genre-tag">Pop</span>
+                            <span class="genre-tag">Rock</span>
+                            <span class="genre-tag">Hip-hop</span>
+                            <span class="genre-tag">Country</span>
+                            <span class="genre-tag">R&B</span>
+                            <span class="genre-tag">Electronic</span>
+                            <span class="genre-tag">Jazz</span>
+                            <span class="genre-tag">Classical</span>
+                            <span class="genre-tag">Folk</span>
+                            <span class="genre-tag">Reggae</span>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <h4>การใส่แท็กแนวเพลงเฉพาะเจาะจง</h4>
+                        <ul>
+                            <li><span class="highlight">Pop ballad, emotional, piano</span> - สำหรับเพลงป๊อปบัลลาดอ่อนโยน</li>
+                            <li><span class="highlight">Upbeat rock, electric guitar, energetic</span> - สำหรับเพลงร็อคสนุกสนาน</li>
+                            <li><span class="highlight">Chill hip-hop, lo-fi, relaxing</span> - สำหรับเพลงฮิปฮอปแนวชิล</li>
+                            <li><span class="highlight">Acoustic folk, gentle, storytelling</span> - สำหรับเพลงโฟล์คเล่าเรื่อง</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ขั้นตอนที่ 4 -->
+            <div class="step-section">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div>สร้างและรอผลลัพธ์</div>
+                </div>
+                <div class="step-content">
+                    <ol class="step-list">
+                        <li>ตรวจสอบข้อมูลที่กรอกให้ครบถ้วน</li>
+                        <li>คลิกปุ่ม <strong>"Create"</strong> สีฟ้าใหญ่</li>
+                        <li>รอให้ AI ประมวลผล (ประมาณ 1-2 นาที)</li>
+                        <li>ระบบจะสร้างเพลง 2 เวอร์ชันให้เลือก</li>
+                        <li>คุณจะเห็นเพลงใหม่ปรากฏในหน้า Library</li>
+                    </ol>
+
+                    <div class="warning">
+                        <div>
+                            <strong>ระวัง:</strong> แต่ละครั้งที่กดสร้างจะใช้เครดิต อย่าลืมตรวจสอบเครดิตที่เหลือก่อนสร้าง
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <h4>ขณะรอผลลัพธ์</h4>
+                        <ul>
+                            <li>ไม่ต้องปิดหน้าเว็บ ให้รอในหน้าเดิม</li>
+                            <li>ระบบจะแสดงสถานะการประมวลผล</li>
+                            <li>สามารถเตรียมเนื้อเพลงเพลงต่อไปได้</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ขั้นตอนที่ 5 -->
+            <div class="step-section">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div>ฟังและจัดการเพลงที่สร้าง</div>
+                </div>
+                <div class="step-content">
+                    <ol class="step-list">
+                        <li>คลิกปุ่ม Play เพื่อฟังเพลงที่สร้างขึ้น</li>
+                        <li>เปรียบเทียบ 2 เวอร์ชันที่ระบบสร้างให้</li>
+                        <li>ใช้ปุ่ม Like/Dislike เพื่อให้คะแนน</li>
+                        <li>คลิกปุ่ม Download เพื่อดาวน์โหลด (ถ้ามี)</li>
+                        <li>แชร์เพลงผ่านลิงก์หรือโซเชียลมีเดีย</li>
+                    </ol>
+
+                    <div class="tips">
+                        <h4>ฟีเจอร์เพิ่มเติม</h4>
+                        <ul>
+                            <li><strong>Extend:</strong> ขยายความยาวเพลงได้</li>
+                            <li><strong>Remix:</strong> สร้างเวอร์ชันใหม่จากเพลงเดิม</li>
+                            <li><strong>Make Cover:</strong> สร้าง Cover Art สำหรับเพลง</li>
+                            <li><strong>Public/Private:</strong> เลือกให้เพลงเป็นสาธารณะหรือส่วนตัว</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning">
+                        <div>
+                            <strong>ลิขสิทธิ์:</strong> เพลงที่สร้างด้วย Suno สามารถใช้เพื่อการพาณิชย์ได้ แต่ควรตรวจสอบข้อกำหนดการใช้งาน
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ระบบเครดิต -->
+            <div class="credits-section">
+                <h3>💳 ระบบเครดิตของ Suno</h3>
+                <p>Suno ใช้ระบบเครดิตในการสร้างเพลง เข้าใจระบบนี้จะช่วยให้คุณใช้งานได้อย่างมีประสิทธิภาพ</p>
+                
+                <div class="credits-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>แพ็กเกจ</th>
+                                <th>ราคา/เดือน</th>
+                                <th>เครดิตต่อเดือน</th>
+                                <th>จำนวนเพลงที่สร้างได้</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Free</strong></td>
+                                <td>ฟรี</td>
+                                <td>50 เครดิต</td>
+                                <td>~10 เพลง</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pro</strong></td>
+                                <td>$10</td>
+                                <td>500 เครดิต</td>
+                                <td>~100 เพลง</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Premier</strong></td>
+                                <td>$30</td>
+                                <td>2000 เครดิต</td>
+                                <td>~400 เพลง</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tips">
+                    <h4>วิธีประหยัดเครดิต</h4>
+                    <ul>
+                        <li>วางแผนเนื้อเพลงให้ดีก่อนสร้าง</li>
+                        <li>ใช้โหมด Custom แทน Simple เพื่อควบคุมผลลัพธ์</li>
+                        <li>ศึกษาแท็กแนวเพลงให้เข้าใจก่อนใช้</li>
+                        <li>ใช้ Free Plan ทดลองก่อนอัพเกรด</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- เคล็ดลับเพิ่มเติม -->
+            <div class="step-section">
+                <div class="step-header">
+                    <div class="step-number">💡</div>
+                    <div>เคล็ดลับการใช้งาน Suno อย่างมีประสิทธิภาพ</div>
+                </div>
+                <div class="step-content">
+                    <div class="tips">
+                        <h4>การเขียนเนื้อเพลงที่เหมาะกับ AI</h4>
+                        <ul>
+                            <li>ใช้โครงสร้าง Verse-Chorus-Verse-Chorus-Bridge-Chorus</li>
+                            <li>ระบุส่วนต่างๆ ด้วย [Verse], [Chorus], [Bridge]</li>
+                            <li>เขียนเนื้อเพลงความยาวพอเหมาะ (ไม่เกิน 3000 ตัวอักษร)</li>
+                            <li>หลีกเลี่ยงการใช้ภาษาที่ซับซ้อนเกินไป</li>
+                        </ul>
+                    </div>
+
+                    <div class="tips">
+                        <h4>การเลือกแนวเพลงที่เหมาะสม</h4>
+                        <ul>
+                            <li>ศึกษาลักษณะของแนวเพลงต่างๆ ก่อนเลือก</li>
+                            <li>ใช้แท็กผสมผสาน เช่น "acoustic pop ballad"</li>
+                            <li>เลือกแนวเพลงที่เข้ากับอารมณ์ของเนื้อเพลง</li>
+                            <li>ทดลองแนวเพลงใหม่ๆ เพื่อหาสไตล์ที่ชอบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="tips">
+                        <h4>การปรับปรุงคุณภาพเพลง</h4>
+                        <ul>
+                            <li>ใช้ฟีเจอร์ Extend เพื่อขยายเพลงให้ยาวขึ้น</li>
+                            <li>ลองสร้างหลายเวอร์ชันแล้วเลือกที่ดีที่สุด</li>
+                            <li>ใช้ Remix เพื่อปรับแต่งเพลงที่ชอบ</li>
+                            <li>ศึกษาเพลงของผู้ใช้คนอื่นเพื่อหาแรงบันดาลใจ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- สรุป -->
+            <div class="summary">
+                <h3>🎵 สรุปการใช้งาน</h3>
+                <p>Suno AI เป็นเครื่องมือที่ทรงพลังสำหรับการสร้างเพลง ไม่ว่าคุณจะเป็นนักดนตรีมืออาชีพหรือคนที่ไม่มีพื้นฐานดนตรี คุณก็สามารถสร้างเพลงที่มีคุณภาพได้ด้วย AI</p>
+                
+                <div style="margin-top: 2rem; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                    <h4>🚀 เริ่มต้นสร้างเพลงของคุณเลยวันนี้!</h4>
+                    <p>ลองใช้ Free Plan ก่อน แล้วค่อยอัพเกรดเมื่อต้องการสร้างเพลงมากขึ้น</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎵 Workshop นี้จัดทำขึ้นเพื่อการศึกษาและส่งเสริมการใช้เทคโนโลยี AI ในการสร้างสรรค์</p>
+            <p>💡 สร้างโดย: AI Assistant | 📅 อัปเดต: 2025</p>
+        </div>
+    </div>
+</body>
+</html>
