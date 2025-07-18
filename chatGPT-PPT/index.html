@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop: การใช้งาน ChatGPT เพื่อสร้างงานนำเสนอ PowerPoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #ff6b6b;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .info-card strong {
+            color: #ff6b6b;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 3px solid #ddd;
+        }
+
+        .toc h3 {
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover {
+            background: #fff5f5;
+            transform: translateX(5px);
+        }
+
+        .toc-item a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+        }
+
+        .method {
+            margin-bottom: 3rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .method:hover {
+            transform: translateY(-3px);
+        }
+
+        .method-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .method-number {
+            background: rgba(255,255,255,0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .method-content {
+            padding: 2rem;
+        }
+
+        .steps {
+            background: #fff3e0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #ff9800;
+            margin: 1rem 0;
+        }
+
+        .steps h4 {
+            color: #ff9800;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ff9800;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tips {
+            background: #e8f5e8;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+            margin: 1rem 0;
+        }
+
+        .tips h4 {
+            color: #4caf50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tips h4::before {
+            content: "💡";
+            margin-right: 0.5rem;
+        }
+
+        .example {
+            background: #f3e5f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #9c27b0;
+            margin: 1rem 0;
+        }
+
+        .example h4 {
+            color: #9c27b0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .example h4::before {
+            content: "📝";
+            margin-right: 0.5rem;
+        }
+
+        .command-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid #4a5568;
+        }
+
+        .warning {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning::before {
+            content: "⚠️";
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .benefits {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .benefits h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .benefit-item {
+            background: rgba(255,255,255,0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .summary h3 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100px); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .info-grid,
+            .toc-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .method-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .method-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>🤖 Workshop: การใช้งาน ChatGPT เพื่อสร้างงานนำเสนอ PowerPoint</h1>
+                <p>4 วิธีอัจฉริยะในการใช้ ChatGPT สร้าง PPT แบบมืออาชีพ</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- ข้อมูลทั่วไป -->
+            <div class="intro-section">
+                <h2>🎯 ทำไมต้องใช้ ChatGPT สร้าง PowerPoint?</h2>
+                <p>ประหยัดเวลา 80% ในการสร้างงานนำเสนอ พร้อมเนื้อหาคุณภาพสูงและการออกแบบที่น่าประทับใจ</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <strong>⏰ ระยะเวลา:</strong>
+                    2.5 ชั่วโมง
+                </div>
+                <div class="info-card">
+                    <strong>🎯 กลุ่มเป้าหมาย:</strong>
+                    นักศึกษา, คนทำงาน, ผู้สอน
+                </div>
+                <div class="info-card">
+                    <strong>📚 ความรู้พื้นฐาน:</strong>
+                    PowerPoint เบื้องต้น, ChatGPT เบื้องต้น
+                </div>
+                <div class="info-card">
+                    <strong>💻 อุปกรณ์:</strong>
+                    คอมพิวเตอร์ + อินเทอร์เน็ต + ChatGPT Account
+                </div>
+            </div>
+
+            <!-- สารบัญ -->
+            <div class="toc">
+                <h3>📋 เนื้อหาที่จะได้เรียนรู้</h3>
+                <div class="toc-grid">
+                    <div class="toc-item">
+                        <a href="#method1">วิธีที่ 1: สร้างโครงร่างและเนื้อหาสไลด์</a>
+                    </div>
+                    <div class="toc-item">
+                        <a href="#method2">วิธีที่ 2: สร้าง PPT อัตโนมัติด้วยรหัส VBA</a>
+                    </div>
+                    <div class="toc-item">
+                        <a href="#method3">วิธีที่ 3: ใช้งานร่วมกับ AIRPRM</a>
+                    </div>
+                    <div class="toc-item">
+                        <a href="#method4">วิธีที่ 4: สร้างคำแนะนำภาพประกอบ</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- วิธีที่ 1 -->
+            <div class="method" id="method1">
+                <div class="method-header">
+                    <div class="method-number">1</div>
+                    <div>วิธีที่ 1: ใช้ ChatGPT สร้างโครงร่างและเนื้อหาสไลด์</div>
+                </div>
+                <div class="method-content">
+                    <p>วิธีพื้นฐานที่ใช้งานง่ายที่สุด เหมาะสำหรับผู้เริ่มต้น</p>
+
+                    <div class="steps">
+                        <h4>📝 ขั้นตอนการดำเนินการ</h4>
+                        <ol class="step-list">
+                            <li>กำหนดหัวข้อและจุดประสงค์ของงานนำเสนอ</li>
+                            <li>สร้างโครงร่างด้วย ChatGPT</li>
+                            <li>ขอให้ ChatGPT สร้างเนื้อหาสำหรับแต่ละสไลด์</li>
+                            <li>คัดลอกเนื้อหาไปยัง PowerPoint</li>
+                            <li>ปรับแต่งการออกแบบด้วย PowerPoint Designer</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <h4>ตัวอย่างคำสั่ง ChatGPT</h4>
+                        <div class="command-box">
+"คุณเป็นผู้เชี่ยวชาญใน [หัวข้อ]. เขียนเค้าร่างสำหรับงานนำเสนอ PowerPoint ที่ครอบคลุมหัวข้อ [หัวข้อย่อย] จำนวน [จำนวน] สไลด์"
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <h4>ตัวอย่างการขยายเนื้อหา</h4>
+                        <div class="command-box">
+"ขยายหัวข้อย่อยและหัวข้อย่อยที่คุณให้ไว้ก่อนหน้านี้ คุณสามารถพิจารณาอธิบายแนวคิดหรือเสนอตัวอย่างสถิติสนับสนุนและอธิบายรายละเอียดใด ๆ ที่คุณคิดว่าจะช่วยเพิ่มความเข้าใจของผู้ชมในหัวข้อ"
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <h4>เคล็ดลับสำคัญ</h4>
+                        <ul>
+                            <li>ระบุกลุ่มเป้าหมายอย่างชัดเจน</li>
+                            <li>ใช้คำสั่งแบบเจาะจง เช่น "เขียนในโทนเป็นทางการ"</li>
+                            <li>ขอให้สร้างเนื้อหาที่เหมาะสมกับระยะเวลาการนำเสนอ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- วิธีที่ 2 -->
+            <div class="method" id="method2">
+                <div class="method-header">
+                    <div class="method-number">2</div>
+                    <div>วิธีที่ 2: สร้างงานนำเสนออัตโนมัติด้วยรหัส VBA</div>
+                </div>
+                <div class="method-content">
+                    <p>วิธีขั้นสูงที่ใช้ Visual Basic for Applications เพื่อสร้างสไลด์อัตโนมัติ</p>
+
+                    <div class="warning">
+                        <div>
+                            <strong>หมายเหตุ:</strong> วิธีนี้ต้องใช้ความรู้เบื้องต้นเกี่ยวกับ VBA และใช้ได้เฉพาะ Windows เท่านั้น
+                        </div>
+                    </div>
+
+                    <div class="steps">
+                        <h4>🔧 ขั้นตอนการดำเนินการ</h4>
+                        <ol class="step-list">
+                            <li>ขอให้ ChatGPT สร้างรหัส VBA สำหรับ PowerPoint</li>
+                            <li>เปิด Visual Basic Editor ใน PowerPoint (Alt + F11)</li>
+                            <li>สร้างโมดูลใหม่และวางรหัสที่ได้</li>
+                            <li>รันรหัสเพื่อสร้างสไลด์อัตโนมัติ</li>
+                            <li>ปรับแต่งการออกแบบตามต้องการ</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <h4>ตัวอย่างคำสั่ง ChatGPT</h4>
+                        <div class="command-box">
+"เขียนรหัส VBA PowerPoint ให้ฉันเรื่อง [หัวข้อ] จำนวน [จำนวน] สไลด์"
+                        </div>
+                    </div>
+
+                    <div class="steps">
+                        <h4>🔍 การเรียกใช้รหัส VBA</h4>
+                        <ol class="step-list">
+                            <li>คัดลอกรหัสที่สร้างโดย ChatGPT</li>
+                            <li>เปิด Visual Basic Editor ใน PowerPoint โดยไปที่ เครื่องมือ > แมโคร > Visual Basic Editor</li>
+                            <li>จากหน้าต่าง "แทรกโมดูล" วางรหัสจากหน้าต่าง "เรียก"</li>
+                            <li>กด F5 เพื่อรันรหัส</li>
+                        </ol>
+                    </div>
+
+                    <div class="tips">
+                        <h4>ข้อดีของวิธีนี้</h4>
+                        <ul>
+                            <li>สร้างสไลด์ได้จำนวนมากในครั้งเดียว</li>
+                            <li>ควบคุมรูปแบบและการจัดวางได้แม่นยำ</li>
+                            <li>ประหยัดเวลาสำหรับงานนำเสนอขนาดใหญ่</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- วิธีที่ 3 -->
+            <div class="method" id="method3">
+                <div class="method-header">
+                    <div class="method-number">3</div>
+                    <div>วิธีที่ 3: ใช้งาน ChatGPT ร่วมกับ AIRPRM</div>
+                </div>
+                <div class="method-content">
+                    <p>ใช้ส่วนขยายของเบราว์เซอร์ที่มีเทมเพลตพร้อมใช้สำหรับ ChatGPT</p>
+
+                    <div class="steps">
+                        <h4>⚙️ การติดตั้ง AIRPRM</h4>
+                        <ol class="step-list">
+                            <li>เข้าไปที่ Chrome Web Store</li>
+                            <li>ค้นหา "AIRPRM for ChatGPT"</li>
+                            <li>คลิก "Add to Chrome" และติดตั้ง</li>
+                            <li>รีสตาร์ทเบราว์เซอร์</li>
+                            <li>เข้าสู่ ChatGPT จะเห็นเทมเพลตใหม่</li>
+                        </ol>
+                    </div>
+
+                    <div class="steps">
+                        <h4>📋 การใช้งาน AIRPRM</h4>
+                        <ol class="step-list">
+                            <li>ค้นหา "PowerPoint" ในแถบค้นหาของ AIRPRM</li>
+                            <li>เลือกเทมเพลตที่เหมาะสม</li>
+                            <li>กรอกข้อมูลในช่องที่กำหนด</li>
+                            <li>คลิก "Generate" และรอผลลัพธ์</li>
+                            <li>คัดลอกผลลัพธ์ไปใช้ใน PowerPoint</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <h4>ตัวอย่างเทมเพลตที่มีใน AIRPRM</h4>
+                        <ul>
+                            <li><strong>PowerPoint Creator:</strong> สร้างงานนำเสนอครบวงจร</li>
+                            <li><strong>Slide Content Generator:</strong> สร้างเนื้อหาสไลด์เฉพาะ</li>
+                            <li><strong>Presentation Outline:</strong> สร้างโครงร่างงานนำเสนอ</li>
+                        </ul>
+                    </div>
+
+                    <div class="tips">
+                        <h4>ข้อดีของ AIRPRM</h4>
+                        <ul>
+                            <li>มีเทมเพลตพร้อมใช้หลากหลาย</li>
+                            <li>ประหยัดเวลาในการพิมพ์คำสั่ง</li>
+                            <li>ผลลัพธ์มีคุณภาพและโครงสร้างชัดเจน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- วิธีที่ 4 -->
+            <div class="method" id="method4">
+                <div class="method-header">
+                    <div class="method-number">4</div>
+                    <div>วิธีที่ 4: สร้างคำแนะนำภาพประกอบ</div>
+                </div>
+                <div class="method-content">
+                    <p>ใช้ ChatGPT เพื่อสร้างคำอธิบายสำหรับสร้างภาพประกอบด้วย AI</p>
+
+                    <div class="steps">
+                        <h4>🎨 ขั้นตอนการสร้างภาพประกอบ</h4>
+                        <ol class="step-list">
+                            <li>ขอให้ ChatGPT แนะนำภาพที่เหมาะสม</li>
+                            <li>สร้างคำอธิบาย (Prompt) สำหรับ AI Image Generator</li>
+                            <li>ใช้เครื่องมือสร้างภาพ เช่น Midjourney, DALL-E, Stable Diffusion</li>
+                            <li>ดาวน์โหลดภาพและนำไปใส่ใน PowerPoint</li>
+                            <li>ปรับแต่งการจัดวางภาพให้เหมาะสม</li>
+                        </ol>
+                    </div>
+
+                    <div class="example">
+                        <h4>ตัวอย่างคำสั่ง ChatGPT</h4>
+                        <div class="command-box">
+"แนะนำภาพใดๆ ที่จะรวมอยู่ในสไลด์เพื่อเพิ่มความน่าสนใจของภาพ จัดเตรียมข้อความแนะนำ Midjourney (หรือตัวสร้างข้อความเป็นศิลปะอื่น ๆ) สำหรับภาพที่คุณแนะนำ"
+                        </div>
+                    </div>
+
+                    <div class="example">
+                        <h4>ตัวอย่างผลลัพธ์จาก ChatGPT</h4>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                            <p><strong>แนะนำภาพ:</strong> ภาพกราฟิกแสดงความก้าวหน้าทางเทคโนโลยี</p>
+                            <p><strong>Prompt สำหรับ Midjourney:</strong></p>
+                            <div class="command-box">
+"Modern technology advancement infographic, clean design, blue and white color scheme, futuristic elements, professional presentation style, 16:9 aspect ratio --ar 16:9 --v 5"
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <h4>เครื่องมือสร้างภาพ AI ที่แนะนำ</h4>
+                        <ul>
+                            <li><strong>Midjourney:</strong> คุณภาพสูง เหมาะสำหรับงานอาชีพ</li>
+                            <li><strong>DALL-E:</strong> ใช้งานง่าย เข้าใจภาษาธรรมชาติดี</li>
+                            <li><strong>Stable Diffusion:</strong> ฟรี และปรับแต่งได้มาก</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ประโยชน์ -->
+            <div class="benefits">
+                <h3>🌟 ประโยชน์ที่ได้รับจากการใช้ ChatGPT สร้าง PowerPoint</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="emoji">⚡</div>
+                        <h4>ประหยัดเวลา</h4>
+                        <p>ลดเวลาการสร้างงานนำเสนอลง 70-80%</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="emoji">💡</div>
+                        <h4>ระดมความคิด</h4>
+                        <p>ได้แนวคิดและมุมมองใหม่ๆ ที่หลากหลาย</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="emoji">📝</div>
+                        <h4>เนื้อหาคุณภาพ</h4>
+                        <p>เนื้อหาที่มีโครงสร้างชัดเจนและถูกไวยากรณ์</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="emoji">🎨</div>
+                        <h4>ความคิดสร้างสรรค์</h4>
+                        <p>ไอเดียการออกแบบและภาพประกอบใหม่ๆ</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="emoji">🔄</div>
+                        <h4>ปรับแต่งง่าย</h4>
+                        <p>แก้ไขและปรับปรุงเนื้อหาได้อย่างรวดเร็ว</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="emoji">📊</div>
+                        <h4>มาตรฐานสูง</h4>
+                        <p>งานนำเสนอระดับมืออาชีพทุกครั้ง</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- เคล็ดลับทั่วไป -->
+            <div class="method">
+                <div class="method-header">
+                    <div class="method-number">💎</div>
+                    <div>เคล็ดลับสำคัญสำหรับการใช้งาน</div>
+                </div>
+                <div class="method-content">
+                    <div class="tips">
+                        <h4>การเขียนคำสั่ง (Prompt) ที่มีประสิทธิภาพ</h4>
+                        <ul>
+                            <li>ระบุบริบทและกลุ่มเป้าหมายอย่างชัดเจน</li>
+                            <li>ใช้คำสั่งแบบเจาะจง เช่น "ใช้โทนเป็นทางการ"</li>
+                            <li>กำหนดจำนวนสไลด์และเวลานำเสนอ</li>
+                            <li>ขอตัวอย่างและสถิติประกอบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="tips">
+                        <h4>การปรับปรุงผลลัพธ์</h4>
+                        <ul>
+                            <li>ทดลองถามซ้ำด้วยคำสั่งที่แตกต่างกัน</li>
+                            <li>ขอให้ปรับโทนเสียงหรือรูปแบบการเขียน</li>
+                            <li>รวมผลลัพธ์หลายๆ รอบเข้าด้วยกัน</li>
+                            <li>ตรวจสอบความถูกต้องของข้อมูล</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning">
+                        <div>
+                            <strong>ข้อควรระวัง:</strong> ตรวจสอบความถูกต้องของข้อมูลก่อนนำเสนอ และปรับแต่งให้เหมาะสมกับบริบทของคุณเสมอ
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- สรุป -->
+            <div class="summary">
+                <h3>🎯 สรุปการใช้งาน</h3>
+                <p>ChatGPT เป็นเครื่องมือที่ทรงพลังสำหรับการสร้างงานนำเสนอ PowerPoint ไม่ว่าจะเป็นการสร้างเนื้อหา การออกแบบ หรือการสร้างภาพประกอบ การใช้งานอย่างถูกวิธีจะช่วยให้คุณสร้างงานนำเสนอคุณภาพสูงได้อย่างรวดเร็วและมีประสิทธิภาพ</p>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                    <h4>🚀 ลองใช้งานทั้ง 4 วิธี และเลือกวิธีที่เหมาะสมกับงานของคุณ!</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎓 Workshop นี้จัดทำขึ้นเพื่อการศึกษาและพัฒนาทักษะการใช้ AI ในการทำงาน</p>
+            <p>💡 สร้างโดย: AI Assistant | 📅 อัปเดต: 2025</p>
+        </div>
+    </div>
+</body>
+</html>
